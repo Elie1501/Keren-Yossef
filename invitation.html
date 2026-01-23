@@ -47,10 +47,7 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         .container {
             max-width: 650px;
@@ -89,25 +86,14 @@
             margin: 25px 0;
         }
 
-        .img-bague {
-            height: 450px;
-            background: url('bague.JPG') no-repeat center center / cover;
-        }
+        .img-bague { height: 450px; background: url('bague.JPG') no-repeat center center / cover; }
+        .img-maison { height: 250px; background: url('maison.JPG') no-repeat center center / cover; }
 
-        .img-maison {
-            height: 250px;
-            background: url('maison.JPG') no-repeat center center / cover;
-        }
-
-        .image-section:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 30px rgba(216, 45, 126, 0.2);
-        }
+        .image-section:hover { transform: scale(1.02); }
 
         .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--fuchsia); margin-bottom: 10px; font-weight: 600; }
         .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
         .highlight { color: var(--fuchsia); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
-        .location-hint { font-size: 0.85rem; color: #777; font-style: italic; margin-top: 5px; }
 
         .btn-action {
             display: inline-flex; justify-content: center; width: 100%;
@@ -122,38 +108,51 @@
             margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
         }
 
+        /* --- FORMULAIRE --- */
         .rsvp-form { text-align: left; margin-top: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 5px; color: #555; text-transform: uppercase; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
         .required::after { content: " *"; color: var(--fuchsia); }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
-        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
 
+        input[type="text"], select, textarea {
+            width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+            font-family: inherit; font-size: 0.95rem; background: white;
+        }
+
+        /* STYLE DES RONDS (RADIO) */
+        .radio-group { display: flex; gap: 25px; margin-top: 8px; }
+        .radio-container { display: flex; align-items: center; cursor: pointer; font-weight: 500; font-size: 1rem; }
+        .radio-container input { display: none; }
+        .custom-radio {
+            height: 22px; width: 22px; border: 2px solid var(--coral);
+            border-radius: 50%; display: inline-block; margin-right: 8px;
+            position: relative; transition: 0.3s;
+        }
+        .radio-container input:checked + .custom-radio { background-color: var(--fuchsia); border-color: var(--fuchsia); }
+        .radio-container input:checked + .custom-radio::after {
+            content: ""; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 8px; height: 8px;
+            background: white; border-radius: 50%;
+        }
+
+        hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
         footer { text-align: center; padding: 40px 20px; background: white; }
-
         .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         .petal {
-            position: fixed;
-            background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
-            border-radius: 150% 0 150% 0;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
+            border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 9999;
             box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
             100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
         }
 
-        @media (max-width: 480px) {
-            .img-bague { height: 350px; }
-        }
+        @media (max-width: 480px) { .img-bague { height: 350px; } }
     </style>
 </head>
 <body>
@@ -185,7 +184,7 @@
             <span class="cormorant" style="font-size: 2.2rem; color: var(--fuchsia); display: block; margin-bottom: 10px;">Karen & Yossef</span>
             <span class="highlight">Dimanche 14 Juin 2026</span>
             Au <strong>CHÂTEAU DES HAUTS DE PROVINS</strong>
-            <p class="location-hint">(À 1 heure de Paris)</p>
+            <p style="font-size: 0.85rem; color: #777; font-style: italic;">(À 1 heure de Paris)</p>
             Début de la cérémonie : <span style="color:var(--coral); font-weight:600;">16H30</span>
         </div>
         <a href="https://waze.com/ul?q=Ferreux+77560+Champcenest" target="_blank" class="btn-action btn-outline" style="margin-top: 15px;">Y aller avec Waze</a>
@@ -203,31 +202,51 @@
             <hr>
 
             <div class="form-group">
-                <label class="required">Serez-vous présent à la mairie ?</label>
-                <select id="presence_mairie" name="presence_mairie" onchange="toggleMairieFields()" required>
-                    <option value="non">NON</option>
+                <label class="required">Présence à la mairie ?</label>
+                <select id="presence_mairie" name="presence_mairie" onchange="toggleMairie()" required>
+                    <option value="" disabled selected>Faites votre choix</option>
                     <option value="oui">OUI</option>
+                    <option value="non">NON</option>
                 </select>
             </div>
 
-            <div class="form-group" id="group_nb_mairie" style="display: none;">
-                <label class="required">Nombre de personnes</label>
-                <input type="number" name="guests_mairie" min="1" max="2" value="1">
+            <div class="form-group" id="group_mairie" style="display: none;">
+                <label class="required">Nombre de personnes (Mairie)</label>
+                <div class="radio-group">
+                    <label class="radio-container">
+                        <input type="radio" name="guests_mairie" value="1">
+                        <span class="custom-radio"></span> 1
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="guests_mairie" value="2">
+                        <span class="custom-radio"></span> 2
+                    </label>
+                </div>
             </div>
 
             <hr>
 
             <div class="form-group">
-                <label class="required">Serez-vous présent à la houppa ?</label>
-                <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppaFields()" required>
-                    <option value="non">NON</option>
+                <label class="required">Présence à la houppa ?</label>
+                <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppa()" required>
+                    <option value="" disabled selected>Faites votre choix</option>
                     <option value="oui">OUI</option>
+                    <option value="non">NON</option>
                 </select>
             </div>
 
-            <div class="form-group" id="group_nb_houppa" style="display: none;">
-                <label class="required">Nombre de personnes</label>
-                <input type="number" name="guests_houppa" min="1" max="2" value="1">
+            <div class="form-group" id="group_houppa" style="display: none;">
+                <label class="required">Nombre de personnes (Houppa)</label>
+                <div class="radio-group">
+                    <label class="radio-container">
+                        <input type="radio" name="guests_houppa" value="1">
+                        <span class="custom-radio"></span> 1
+                    </label>
+                    <label class="radio-container">
+                        <input type="radio" name="guests_houppa" value="2">
+                        <span class="custom-radio"></span> 2
+                    </label>
+                </div>
             </div>
 
             <hr>
@@ -250,14 +269,26 @@
 </footer>
 
 <script>
-    function toggleMairieFields() {
+    function toggleMairie() {
         const presence = document.getElementById('presence_mairie').value;
-        document.getElementById('group_nb_mairie').style.display = (presence === 'oui') ? 'block' : 'none';
+        const group = document.getElementById('group_mairie');
+        const radios = group.querySelectorAll('input[type="radio"]');
+        group.style.display = (presence === 'oui') ? 'block' : 'none';
+        radios.forEach(r => {
+            r.required = (presence === 'oui');
+            if (presence === 'non') r.checked = false;
+        });
     }
 
-    function toggleHouppaFields() {
+    function toggleHouppa() {
         const presence = document.getElementById('presence_houppa').value;
-        document.getElementById('group_nb_houppa').style.display = (presence === 'oui') ? 'block' : 'none';
+        const group = document.getElementById('group_houppa');
+        const radios = group.querySelectorAll('input[type="radio"]');
+        group.style.display = (presence === 'oui') ? 'block' : 'none';
+        radios.forEach(r => {
+            r.required = (presence === 'oui');
+            if (presence === 'non') r.checked = false;
+        });
     }
 
     function reveal() {
