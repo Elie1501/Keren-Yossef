@@ -13,15 +13,14 @@
             --gold-light: #f4e4bc;
         }
 
-        /* Optimisation Mobile : Empêcher le scroll et gérer la hauteur réelle */
+        /* Optimisation Mobile Totale */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body {
             background-color: #0a0a0a;
             color: var(--gold-light);
             font-family: 'Montserrat', sans-serif;
-            height: 100vh; /* Repli pour navigateurs anciens */
-            height: 100dvh; /* Hauteur dynamique pour mobiles (ignore barres URL) */
+            height: 100dvh; /* Hauteur dynamique pour mobiles */
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -32,7 +31,6 @@
         .bg-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Ajustement background pour mobile : focus haut 10% */
             background: url('bisous.JPG') no-repeat center 10%/cover;
             filter: brightness(0.3) blur(4px);
             z-index: -1;
@@ -45,141 +43,106 @@
             opacity: 0; 
             animation: fadeIn 2s ease-out forwards 0.5s;
             width: 100%;
-            padding: 0 20px;
+            padding: 0 40px; /* Plus de marge sur les côtés pour affiner le contenu */
         }
+
+        p.invite { letter-spacing: 2px; font-size: 0.6rem; margin-bottom: 8px; opacity: 0.8; color: var(--amber); }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.2rem, 10vw, 4.5rem);
+            font-size: clamp(1.8rem, 8vw, 2.5rem);
             font-weight: 300;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             margin-bottom: 15px;
             text-transform: uppercase;
             color: var(--fuchsia);
-            line-height: 1.1;
         }
 
-        /* Compte à rebours optimisé pour petits écrans */
+        /* Compteur Ultra-Fin sur une seule ligne */
         .countdown-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            max-width: 400px;
-            margin: 40px auto;
-        }
-
-        .unit {
             display: flex;
-            flex-direction: column;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 5px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(244, 228, 188, 0.1);
-        }
-
-        .num {
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.5rem, 6vw, 2.2rem);
-            font-weight: 600;
+            font-size: 1.1rem;
             color: var(--coral);
         }
 
-        .label {
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
+        .unit { display: flex; align-items: baseline; gap: 2px; }
+        .num { font-weight: 600; }
+        .label { font-size: 0.5rem; text-transform: uppercase; opacity: 0.7; color: var(--gold-light); }
 
         .date {
-            font-size: 1rem;
-            letter-spacing: 4px;
-            border-top: 1px solid var(--amber);
-            border-bottom: 1px solid var(--amber);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            border-top: 1px solid rgba(255, 179, 71, 0.3);
+            border-bottom: 1px solid rgba(255, 179, 71, 0.3);
             display: inline-block;
-            padding: 8px 25px;
-            margin-bottom: 40px;
+            padding: 4px 12px;
+            margin-bottom: 30px;
         }
 
-        /* Bouton format tel : Largeur confortable pour le pouce */
+        /* Bouton étroit et élégant */
         .enter-btn {
-            display: block;
-            width: fit-content;
-            margin: 0 auto;
+            display: inline-block;
             text-decoration: none;
             color: #0a0a0a;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            padding: 18px 40px;
+            padding: 10px 20px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
-            border-radius: 2px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            min-width: 110px; /* Largeur réduite au maximum */
         }
 
-        .enter-btn:active {
-            transform: scale(0.95);
-        }
+        .enter-btn:active { transform: scale(0.96); opacity: 0.9; }
 
-        @keyframes zoomSlow { from { transform: scale(1.1); } to { transform: scale(1.25); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Ajustements spécifiques aux très petits téléphones */
-        @media (max-width: 360px) {
-            .countdown-container { gap: 5px; }
-            .unit { padding: 8px 2px; }
-            h1 { font-size: 1.8rem; }
-        }
+        @keyframes zoomSlow { from { transform: scale(1.1); } to { transform: scale(1.2); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-<div class="bg-image"></div>
-<div class="intro-container">
-    <p style="letter-spacing: 3px; font-size: 0.75rem; margin-bottom: 20px; color: var(--amber);">VOUS ÊTES INVITÉS AU MARIAGE DE </p>
-    <h1>Karen & Yossef</h1>
+    <div class="bg-image"></div>
+    <div class="intro-container">
+        <p class="invite">VOUS ÊTES INVITÉS</p>
+        <h1>Karen & Yossef</h1>
 
-    <div class="countdown-container" id="timer">
-        <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
-        <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
-        <div class="unit"><span class="num" id="mins">00</span><span class="label">Mins</span></div>
-        <div class="unit"><span class="num" id="secs">00</span><span class="label">Secs</span></div>
+        <div class="countdown-container" id="timer">
+            <div class="unit"><span class="num" id="days">00</span><span class="label">j</span></div>
+            <div class="unit"><span class="num" id="hours">00</span><span class="label">h</span></div>
+            <div class="unit"><span class="num" id="mins">00</span><span class="label">m</span></div>
+            <div class="unit"><span class="num" id="secs">00</span><span class="label">s</span></div>
+        </div>
+
+        <p class="date">09 . 06 . 2026</p>
+        <br>
+        <a href="invitation.html" class="enter-btn">Entrer</a>
     </div>
 
-    <p class="date">09 . 06 . 2026</p>
-    <br>
-    <a href="invitation.html" class="enter-btn">Découvrir l'invitation</a>
-</div>
+    <script>
+        const targetDate = new Date("June 9, 2026 13:30:00").getTime();
 
-<script>
-    // Date cible
-    const targetDate = new Date("June 9, 2026 13:30:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
 
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const difference = targetDate - now;
-
-        if (difference > 0) {
-            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-            document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
-            document.getElementById("secs").innerText = s < 10 ? "0" + s : s;
-        } else {
-            document.getElementById("timer").innerHTML = "<h3 style='grid-column: 1/-1; color:var(--fuchsia)'>C'est le grand jour !</h3>";
+            if (difference > 0) {
+                document.getElementById("days").innerText = Math.floor(difference / (1000 * 60 * 60 * 24));
+                document.getElementById("hours").innerText = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById("mins").innerText = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById("secs").innerText = Math.floor((difference % (1000 * 60)) / 1000);
+            } else {
+                document.getElementById("timer").innerHTML = "<p style='font-size: 0.8rem;'>C'est aujourd'hui !</p>";
+            }
         }
-    }
 
-    // Intervalle de mise à jour 1s
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-</script>
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 </body>
 </html>
