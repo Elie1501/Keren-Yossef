@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitation - 09.06.2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fuchsia: #D82D7E; --amber: #FFB347; --coral: #FF7F50; --beige: #F9F7F2;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(rgba(249, 247, 242, 0.9), rgba(249, 247, 242, 0.9)), url('fond_gallerie.jpg') center/cover fixed;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Décor floral flottant */
+        .decor-flower {
+            position: fixed;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-50%);
+            width: 400px; /* Taille de l'image fleur.jpg */
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .container { max-width: 1000px; margin: auto; padding: 80px 20px; position: relative; }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; text-align: center; color: var(--fuchsia); margin-bottom: 50px; }
+
+        /* Grandes Cartes */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            margin-bottom: 50px;
+            padding: 60px; /* Cartes plus grandes */
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            opacity: 0; transform: translateY(40px);
+            transition: 1s all ease;
+            backdrop-filter: blur(10px);
+        }
+        .card.active { opacity: 1; transform: translateY(0); }
+
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 20px; color: var(--coral); }
+        .card p { font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto 15px; }
+
+        .btn-waze {
+            background: #33DBFF; color: white; padding: 15px 30px;
+            border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 600; transition: 0.3s;
+        }
+
+        /* Lecteur Musique sur le côté */
+        #music-control {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 100;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border: 2px solid var(--fuchsia);
+            transition: 0.3s;
+        }
+        #music-control:hover { transform: scale(1.1); }
+        .icon-music { font-size: 24px; }
+
+        /* RSVP */
+        #rsvp { background: white; padding: 60px; border-radius: 30px; border-top: 8px solid var(--amber); }
+        .form-group { margin-bottom: 30px; text-align: left; }
+        .hidden { display: none; }
+        input, textarea { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 12px; margin-top: 10px; font-size: 1rem; }
+
+        .btn-submit {
+            width: 100%; padding: 20px; background: var(--fuchsia); color: white;
+            border-radius: 50px; border: none; font-weight: 600; cursor: pointer; font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .decor-flower { width: 200px; right: -10%; opacity: 0.4; }
+            .card { padding: 30px; }
+            h2 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<img src="fleur.png" alt="Décor floral" class="decor-flower">
+
+<div id="music-control" onclick="toggleMusic()">
+    <span class="icon-music" id="music-btn">🎵</span>
+</div>
+<audio id="bg-music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+    <h2>Une Journée Magique</h2>
+
+    <div class="card">
+        <h3>🏛️ La Cérémonie Civile</h3>
+        <p>C'est avec une immense joie que nous vous accueillerons pour célébrer notre union civile devant Monsieur le Maire.</p>
+        <p><strong>Mairie de Charenton-le-Pont<br>Mardi 9 Juin 2026 à 13h30</strong></p>
+    </div>
+
+    <div class="card">
+        <h3>✡️ La Cérémonie Religieuse</h3>
+        <p>Sous la Houppa fleurie, nous échangerons nos vœux dans le respect de nos traditions et entourés de votre affection.</p>
+        <p>Un moment de spiritualité et d'émotion pure à ne pas manquer.</p>
+    </div>
+
+    <div class="card">
+        <h3>🏰 Le Cocktail & Dîner</h3>
+        <p>La fête se poursuivra dans le cadre enchanteur du Château des Hauts de Provins.</p>
+        <p>Préparez-vous pour une soirée inoubliable sous le signe du partage et de la danse.</p>
+        <p><strong>Début des festivités : 16h30</strong></p>
+        <a href="https://waze.com/ul?q=Chateau%20des%20Hauts%20de%20Provins&navigate=yes" class="btn-waze" target="_blank">📍 Itinéraire Waze</a>
+    </div>
+
+    <div id="rsvp" class="card">
+        <h3>RSVP</h3>
+        <p>Merci de nous confirmer votre présence avant le 1er Mai 2026.</p>
+        <form id="rsvp-form">
+            <div class="form-group">
+                <label>Serez-vous présent ?</label><br><br>
+                <input type="radio" name="presence" value="oui" id="y" style="width:auto"> <label for="y">Oui, je viens !</label>
+                <input type="radio" name="presence" value="non" id="n" style="width:auto; margin-left: 20px;"> <label for="n">Non, hélas</label>
+            </div>
+
+            <div id="guest-field" class="hidden">
+                <label>Nombre de personnes :</label>
+                <input type="number" name="guests" min="1" max="10" value="1">
+            </div>
+
+            <div class="form-group">
+                <label>Un petit mot doux :</label>
+                <textarea rows="4" placeholder="Votre message pour Elie et [Prénom]..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Envoyer ma réponse</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Animations au scroll
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+    });
+    document.querySelectorAll('.card').forEach(c => obs.observe(c));
+
+    // Musique
+    const audio = document.getElementById('bg-music');
+    const btn = document.getElementById('music-btn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+        if (isPlaying) {
+            audio.pause();
+            btn.innerText = "🔇";
+        } else {
+            audio.play();
+            btn.innerText = "🎵";
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // Logique Formulaire
+    document.querySelectorAll('input[name="presence"]').forEach(r => {
+        r.addEventListener('change', (e) => {
+            document.getElementById('guest-field').classList.toggle('hidden', e.target.value === 'non');
+        });
+    });
+</script>
+</body>
+</html>
