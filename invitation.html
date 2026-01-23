@@ -2,272 +2,211 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation | Karen & Yossef</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Karen & Yossef | L'Union</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --fuchsia: #D82D7E;
             --coral: #FF7F50;
-            --amber: #B8860B;
-            --soft-white: #FDFBF7;
-            --text-dark: #2c2c2c;
+            --amber: #FFB347;
+            --gold-light: #f4e4bc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
-            background-color: var(--soft-white);
-            color: var(--text-dark);
+            background-color: #0a0a0a;
+            color: var(--gold-light);
             font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
-            line-height: 1.5;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             position: relative;
         }
 
-        .cormorant { font-family: 'Cormorant Garamond', serif; }
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: brightness(0.4) blur(1px);
+            background: url('bisousfront.jpg') no-repeat center top / cover;
+            animation: zoomSlow 15s infinite alternate ease-in-out;
+            transform-origin: center top;
+        }
 
-        /* --- HEADER --- */
-        header {
-            height: 55vh;
+        .intro-container {
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards 0.5s;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3.5rem, 15vw, 5.5rem);
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: #fff;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
+            background: linear-gradient(to bottom, #fff, var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 5px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            color: var(--amber);
+            text-transform: uppercase;
+        }
+
+        /* --- CHRONO CARRÉ --- */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0 40px 0;
+        }
+
+        .unit {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.1), var(--soft-white)), url('maisonVueHauteur.JPG') no-repeat center center / cover;
-            text-align: center;
-            padding: 20px;
+            width: 65px;
+            height: 65px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(244, 228, 188, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 4px; /* Forme carrée */
         }
 
-        .logo-main {
-            width: clamp(150px, 40vw, 220px);
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
-            margin-bottom: 15px;
-            opacity: 0.7; /* Opacité réduite demandée */
-            animation: float 4s ease-in-out infinite;
+        .num {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .label {
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-top: 4px;
         }
 
-        .container {
-            max-width: 650px;
-            margin: -30px auto 40px;
-            padding: 0 15px;
-            position: relative;
-            z-index: 10;
+        .date {
+            font-size: 1rem;
+            letter-spacing: 5px;
+            padding: 10px 0;
+            margin-bottom: 40px;
+            font-weight: 200;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-block;
+            min-width: 250px;
         }
 
-        /* --- CARTES --- */
-        .wedding-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px 20px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            text-align: center;
-            position: relative;
-            backdrop-filter: blur(5px);
-        }
-
-        .wedding-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
-        }
-
-        /* --- SECTIONS IMAGES --- */
-        .image-section {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s ease;
+        .enter-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            padding: 16px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.3);
             cursor: pointer;
-            position: relative;
-            margin: 25px 0;
         }
 
-        /* Agrandissement spécifique pour la bague */
-        .img-bague {
-            height: 450px; /* Plus grand comme demandé */
-            background: url('bague.JPG') no-repeat center center / cover;
+        .enter-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(216, 45, 126, 0.5);
         }
 
-        .img-maison {
-            height: 250px;
-            background: url('maison.JPG') no-repeat center center / cover;
+        @keyframes zoomSlow {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
         }
 
-        .image-section:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 30px rgba(216, 45, 126, 0.2);
-        }
-
-        /* --- TEXTES & BOUTONS --- */
-        .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--fuchsia); margin-bottom: 10px; font-weight: 600; }
-        .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
-        .highlight { color: var(--fuchsia); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
-        .location-hint { font-size: 0.85rem; color: #777; font-style: italic; margin-top: 5px; }
-
-        .btn-action {
-            display: inline-flex; justify-content: center; width: 100%;
-            padding: 14px; background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            color: white; text-decoration: none; border-radius: 50px;
-            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            border: none; cursor: pointer; transition: 0.3s;
-        }
-
-        .btn-outline {
-            background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
-            margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
-        }
-
-        /* --- RSVP FORM --- */
-        .rsvp-form { text-align: left; margin-top: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 5px; color: #555; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
-
-        footer { text-align: center; padding: 40px 20px; background: white; }
-
-        .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* --- PÉTALES ÉLÉGANTS --- */
-        .petal {
-            position: fixed;
-            background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
-            border-radius: 150% 0 150% 0;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 480px) {
-            .img-bague { height: 350px; } /* Ajustement mobile */
+            h1 { font-size: 3.8rem; }
+            .unit { width: 60px; height: 60px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="logo2.png" alt="Karen & Yossef" class="logo-main">
-    <p class="cormorant" style="font-size: 1.4rem; color: var(--amber); font-style: italic;">Sous le regard de Hachem</p>
-</header>
+<div class="bg-image"></div>
 
-<div class="container">
+<div class="intro-container">
+    <p class="subtitle">Nous allons nous dire Oui</p>
+    <h1>Karen & Yossef</h1>
 
-    <div class="wedding-card reveal">
-        <p class="card-type">Union Civile</p>
-        <h3 class="card-title cormorant">La Mairie</h3>
-        <div class="card-body">
-            <span class="highlight">Mardi 9 Juin 2026</span>
-            À la Mairie de <strong>CHARENTON-LE-PONT</strong><br>
-            Cérémonie à : <span style="color:var(--coral); font-weight:600;">13H30</span>
-        </div>
-        <a href="https://maps.google.com" target="_blank" class="btn-action btn-outline">Itinéraire</a>
+    <div class="countdown-container" id="timer">
+        <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
+        <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
+        <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
+        <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
     </div>
 
-    <div class="image-section img-bague reveal"></div>
-
-    <div class="wedding-card reveal" style="border: 1px solid rgba(184, 134, 11, 0.3);">
-        <p class="card-type">Cérémonie Religieuse</p>
-        <h3 class="card-title cormorant">La Houppa</h3>
-        <div class="card-body">
-            <span class="cormorant" style="font-size: 2.2rem; color: var(--fuchsia); display: block; margin-bottom: 10px;">Karen & Yossef</span>
-            <span class="highlight">Dimanche 14 Juin 2026</span>
-            Au <strong>CHÂTEAU DES HAUTS DE PROVINS</strong>
-            <p class="location-hint">(À 1 heure de Paris)</p>
-            Début de la cérémonie : <span style="color:var(--coral); font-weight:600;">16H30</span>
-        </div>
-        <a href="https://waze.com/ul?q=Ferreux+77560+Champcenest" target="_blank" class="btn-action btn-outline" style="margin-top: 15px;">Y aller avec Waze</a>
-    </div>
-
-    <div class="wedding-card reveal">
-        <p class="card-type">Réponse</p>
-        <h3 class="card-title cormorant">Confirmation</h3>
-        <form id="rsvpForm" class="rsvp-form">
-            <div class="form-group">
-                <label>Nom & Prénom</label>
-                <input type="text" name="nom" required placeholder="Votre nom">
-            </div>
-            <div class="form-group">
-                <label>Serez-vous présent ?</label>
-                <select id="presence" name="presence" onchange="toggleGuestFields()">
-                    <option value="oui">OUI, avec plaisir !</option>
-                    <option value="non">NON, j'ai un empêchement</option>
-                </select>
-            </div>
-            <div class="form-group" id="guest-count-group">
-                <label>Nombre de personnes</label>
-                <input type="number" name="guests" min="1" max="10" value="1">
-            </div>
-            <div class="form-group">
-                <label>Un message ?</label>
-                <textarea name="msg" rows="2"></textarea>
-            </div>
-            <button type="submit" class="btn-action">Confirmer ma présence</button>
-        </form>
-    </div>
-
-    <div class="image-section img-maison reveal"></div>
+    <p class="date">14 JUIN 2026</p>
+    <br>
+    <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
 
-<footer>
-    <p class="cormorant" style="font-size: 1.4rem; color: var(--amber);">Hâte de célébrer avec vous</p>
-    <p style="font-size: 0.65rem; letter-spacing: 2px; margin-top: 10px; color: #aaa;">K&Y - 2026</p>
-</footer>
-
 <script>
-    function toggleGuestFields() {
-        const presence = document.getElementById('presence').value;
-        document.getElementById('guest-count-group').style.display = (presence === 'non') ? 'none' : 'block';
-    }
+    const targetDate = new Date("June 14, 2026 16:30:00").getTime();
 
-    function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        for (var i = 0; i < reveals.length; i++) {
-            var windowHeight = window.innerHeight;
-            var elementTop = reveals[i].getBoundingClientRect().top;
-            if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        if (difference > 0) {
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = m.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = s.toString().padStart(2, '0');
+        } else {
+            document.getElementById("timer").innerHTML = "<h3 style='color:#fff; font-family:\"Great Vibes\", cursive; font-size: 2.5rem;'>C'est le grand jour !</h3>";
         }
     }
-    window.addEventListener("scroll", reveal);
-    reveal();
 
-    function createPetal() {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
-        const size = Math.random() * 15 + 10;
-        const startX = Math.random() * window.innerWidth;
-        const xEndOffset = (Math.random() - 0.5) * 300;
-        const duration = Math.random() * 5 + 7;
-        const rotationEnd = Math.random() * 360 + 180;
-        petal.style.width = `${size}px`;
-        petal.style.height = `${size * 1.2}px`;
-        petal.style.left = `${startX}px`;
-        petal.style.top = `-20px`;
-        petal.style.setProperty('--x-end', `${xEndOffset}px`);
-        petal.style.setProperty('--r-end', `${rotationEnd}deg`);
-        petal.style.animation = `fall ${duration}s linear forwards`;
-        document.body.appendChild(petal);
-        setTimeout(() => { petal.remove(); }, duration * 1000);
-    }
-    setInterval(createPetal, 400);
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 </script>
+
 </body>
 </html>
