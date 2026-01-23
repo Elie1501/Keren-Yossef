@@ -2,153 +2,201 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Karen & Yossef | L'Union</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Palette Sunset Tropical extraite de votre image */
             --fuchsia: #D82D7E;
             --coral: #FF7F50;
             --amber: #FFB347;
             --gold-light: #f4e4bc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             background-color: #0a0a0a;
             color: var(--gold-light);
             font-family: 'Montserrat', sans-serif;
-            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
         }
 
+        /* --- CONFIGURATION DE L'IMAGE DE FOND --- */
         .bg-image {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* Position descendue à 10% pour un focus haut */
-            background: url('bisous.JPG') no-repeat center 10%/cover;
-            filter: brightness(0.3) blur(6px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            transform: scale(1.1);
-            animation: zoomSlow 20s infinite alternate;
+            filter: brightness(0.4) blur(1px);
+
+            /* Centrage horizontal et calé sur le haut */
+            background: url('bisousfront.jpg') no-repeat center top / cover;
+
+            /* Animation très légère pour éviter de couper les têtes */
+            animation: zoomSlow 15s infinite alternate ease-in-out;
+            transform-origin: center top;
         }
 
-        .intro-container { z-index: 1; opacity: 0; animation: fadeIn 2s ease-out forwards 0.5s; }
+        /* --- RENDU MOBILE --- */
+        @media (max-width: 768px) {
+            .bg-image {
+                background-position: center top;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                letter-spacing: 2px;
+            }
+        }
+
+        /* --- CONTENU --- */
+        .intro-container {
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards 0.5s;
+            width: 100%;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2.2rem, 10vw, 3.5rem);
             font-weight: 300;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            /* Teinte Fuchsia du thème */
             color: var(--fuchsia);
-            text-shadow: 0 0 20px rgba(216, 45, 126, 0.3);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.8);
         }
 
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 30px 0 50px 0;
+            gap: 12px;
+            margin: 25px 0 40px 0;
         }
 
         .unit {
             display: flex;
             flex-direction: column;
-            min-width: 70px;
+            justify-content: center;
+            align-items: center;
+            width: 65px;
+            height: 65px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(244, 228, 188, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
         }
 
         .num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
-            display: block;
-            /* Teinte Corail pour les chiffres */
             color: var(--coral);
+            line-height: 1;
         }
 
         .label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.8;
-            color: var(--gold-light);
+            letter-spacing: 1px;
+            opacity: 0.9;
+            margin-top: 4px;
         }
 
         .date {
-            font-size: 1.1rem;
-            letter-spacing: 5px;
-            /* Bordures Ambre */
-            border-top: 1px solid var(--amber);
-            border-bottom: 1px solid var(--amber);
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            border-top: 1px solid rgba(255, 179, 71, 0.4);
+            border-bottom: 1px solid rgba(255, 179, 71, 0.4);
             display: inline-block;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            color: var(--gold-light);
+            padding: 8px 20px;
+            margin-bottom: 30px;
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .enter-btn {
             display: inline-block;
             text-decoration: none;
-            color: #0a0a0a;
-            /* Dégradé Fuchsia vers Corail */
+            color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            padding: 15px 45px;
+            padding: 14px 0;
+            width: 210px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.4s ease;
             font-weight: 600;
-            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(216, 45, 126, 0.4);
+            cursor: pointer;
         }
 
         .enter-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 127, 80, 0.5);
-            filter: saturate(1.2);
-            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(216, 45, 126, 0.6);
         }
 
-        @keyframes zoomSlow { from { transform: scale(1.1); } to { transform: scale(1.2); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .enter-btn:active { transform: scale(0.95); }
 
-        @media (max-width: 768px) {
-            .countdown-container { gap: 10px; }
-            .num { font-size: 1.8rem; }
-            .unit { min-width: 50px; }
-            h1 { font-size: 3rem; }
+        /* --- ANIMATIONS --- */
+        @keyframes zoomSlow {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); } /* Zoom réduit pour plus de stabilité */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 370px) {
+            .unit { width: 55px; height: 55px; }
+            .num { font-size: 1.3rem; }
+            h1 { font-size: 1.7rem; }
         }
     </style>
 </head>
 <body>
+
 <div class="bg-image"></div>
+
 <div class="intro-container">
-    <p style="letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 20px; opacity: 0.9; color: var(--amber);">VOUS ÊTES INVITÉS AU MARIAGE DE </p>
+    <p style="letter-spacing: 4px; font-size: 0.75rem; margin-bottom: 15px; color: var(--amber); font-weight: 400;">VOUS ÊTES INVITÉS</p>
     <h1>Karen & Yossef</h1>
 
     <div class="countdown-container" id="timer">
         <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
         <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
-        <div class="unit"><span class="num" id="mins">00</span><span class="label">Mins</span></div>
-        <div class="unit"><span class="num" id="secs">00</span><span class="label">Secs</span></div>
+        <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
+        <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
     </div>
 
-    <p class="date">09 . 06 . 2026</p>
+    <p class="date">14 . 06 . 2026</p>
     <br>
-    <a href="invitation.html" class="enter-btn">Découvrir l'invitation</a>
+    <a href="invitation.html" class="enter-btn">Découvrir</a>
 </div>
 
 <script>
-    const targetDate = new Date("June 9, 2026 13:30:00").getTime();
+    const targetDate = new Date("June 14, 2026 13:30:00").getTime();
 
     function updateCountdown() {
         const now = new Date().getTime();
@@ -160,17 +208,18 @@
             const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-            document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
-            document.getElementById("secs").innerText = s < 10 ? "0" + s : s;
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = m.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = s.toString().padStart(2, '0');
         } else {
-            document.getElementById("timer").innerHTML = "<h3 style='color:var(--fuchsia)'>C'est le grand jour !</h3>";
+            document.getElementById("timer").innerHTML = "<h3 style='color:var(--coral); font-family:\"Cormorant Garamond\", serif; font-size: 1.5rem;'>C'est le grand jour !</h3>";
         }
     }
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
 </script>
+
 </body>
 </html>
