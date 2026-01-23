@@ -34,7 +34,7 @@
             position: relative;
         }
 
-        /* --- CONFIGURATION DE L'IMAGE DE FOND --- */
+        /* --- IMAGE DE FOND --- */
         .bg-image {
             position: absolute;
             top: 0;
@@ -43,25 +43,11 @@
             height: 100%;
             z-index: -1;
             filter: brightness(0.4) blur(1px);
-
-            /* Centrage horizontal et calé sur le haut */
+            /* Centrage horizontal et calé en haut pour les visages */
             background: url('bisousfront.jpg') no-repeat center top / cover;
-
-            /* Animation très légère pour éviter de couper les têtes */
-            animation: zoomSlow 15s infinite alternate ease-in-out;
+            /* Zoom très léger pour le dynamisme */
+            animation: zoomSlow 20s infinite alternate ease-in-out;
             transform-origin: center top;
-        }
-
-        /* --- RENDU MOBILE --- */
-        @media (max-width: 768px) {
-            .bg-image {
-                background-position: center top;
-            }
-
-            h1 {
-                font-size: clamp(1.8rem, 8vw, 2.5rem);
-                letter-spacing: 2px;
-            }
         }
 
         /* --- CONTENU --- */
@@ -69,27 +55,38 @@
             z-index: 1;
             opacity: 0;
             animation: fadeIn 2s ease-out forwards 0.5s;
-            width: 100%;
-            padding: 0 20px;
-            margin-top: 60px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .label-top {
+            letter-spacing: clamp(2px, 1vw, 5px);
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+            margin-bottom: 1.5vh;
+            color: var(--amber);
+            font-weight: 400;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.2rem, 10vw, 3.5rem);
+            font-size: clamp(2rem, 9vw, 4.5rem);
             font-weight: 300;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
+            letter-spacing: clamp(2px, 1vw, 8px);
+            margin-bottom: 2vh;
             text-transform: uppercase;
             color: var(--fuchsia);
             text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+            line-height: 1.1;
         }
 
+        /* --- COMPTEUR --- */
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin: 25px 0 40px 0;
+            gap: clamp(10px, 2.5vw, 20px);
+            margin: 3vh 0 4vh 0;
         }
 
         .unit {
@@ -97,24 +94,24 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 65px;
-            height: 65px;
-            background: rgba(0, 0, 0, 0.6);
+            width: clamp(60px, 16vw, 85px);
+            height: clamp(60px, 16vw, 85px);
+            background: rgba(0, 0, 0, 0.65);
             border: 1px solid rgba(244, 228, 188, 0.2);
             backdrop-filter: blur(8px);
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
+            font-size: clamp(1.4rem, 4.5vw, 2.2rem);
             font-weight: 600;
             color: var(--coral);
             line-height: 1;
         }
 
         .label {
-            font-size: 0.55rem;
+            font-size: clamp(0.5rem, 1.8vw, 0.7rem);
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
@@ -122,13 +119,13 @@
         }
 
         .date {
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
             letter-spacing: 4px;
             border-top: 1px solid rgba(255, 179, 71, 0.4);
             border-bottom: 1px solid rgba(255, 179, 71, 0.4);
             display: inline-block;
-            padding: 8px 20px;
-            margin-bottom: 30px;
+            padding: 1vh 6vw;
+            margin-bottom: 4vh;
             background: rgba(0, 0, 0, 0.4);
         }
 
@@ -137,22 +134,16 @@
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            padding: 14px 0;
-            width: 210px;
+            padding: clamp(14px, 2.2vh, 20px) 0;
+            width: clamp(190px, 55vw, 260px);
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
             border-radius: 50px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(216, 45, 126, 0.4);
-            cursor: pointer;
-        }
-
-        .enter-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(216, 45, 126, 0.6);
         }
 
         .enter-btn:active { transform: scale(0.95); }
@@ -160,18 +151,12 @@
         /* --- ANIMATIONS --- */
         @keyframes zoomSlow {
             from { transform: scale(1); }
-            to { transform: scale(1.05); } /* Zoom réduit pour plus de stabilité */
+            to { transform: scale(1.08); }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 370px) {
-            .unit { width: 55px; height: 55px; }
-            .num { font-size: 1.3rem; }
-            h1 { font-size: 1.7rem; }
         }
     </style>
 </head>
@@ -180,7 +165,7 @@
 <div class="bg-image"></div>
 
 <div class="intro-container">
-    <p style="letter-spacing: 4px; font-size: 0.75rem; margin-bottom: 15px; color: var(--amber); font-weight: 400;">VOUS ÊTES INVITÉS</p>
+    <p class="label-top">Vous êtes invités au mariage de :</p>
     <h1>Karen & Yossef</h1>
 
     <div class="countdown-container" id="timer">
@@ -213,7 +198,7 @@
             document.getElementById("mins").innerText = m.toString().padStart(2, '0');
             document.getElementById("secs").innerText = s.toString().padStart(2, '0');
         } else {
-            document.getElementById("timer").innerHTML = "<h3 style='color:var(--coral); font-family:\"Cormorant Garamond\", serif; font-size: 1.5rem;'>C'est le grand jour !</h3>";
+            document.getElementById("timer").innerHTML = "<h3 style='color:var(--coral); font-family:\"Cormorant Garamond\", serif;'>C'est le grand jour !</h3>";
         }
     }
 
