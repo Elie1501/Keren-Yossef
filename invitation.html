@@ -67,6 +67,7 @@
             text-align: center;
             position: relative;
             backdrop-filter: blur(5px);
+            transition: all 0.5s ease;
         }
 
         .wedding-card::before {
@@ -88,8 +89,6 @@
 
         .img-bague { height: 450px; background: url('bague.JPG') no-repeat center center / cover; }
         .img-maison { height: 250px; background: url('maison.JPG') no-repeat center center / cover; }
-
-        .image-section:hover { transform: scale(1.02); }
 
         .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--fuchsia); margin-bottom: 10px; font-weight: 600; }
         .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
@@ -114,13 +113,12 @@
         label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
         .required::after { content: " *"; color: var(--fuchsia); }
 
-        input[type="text"], select, textarea {
+        input[type="text"], textarea, select {
             width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px;
             font-family: inherit; font-size: 0.95rem; background: white;
         }
 
-        /* STYLE DES RONDS (RADIO) */
-        .radio-group { display: flex; gap: 25px; margin-top: 8px; }
+        .radio-group { display: flex; gap: 20px; margin-top: 5px; }
         .radio-container { display: flex; align-items: center; cursor: pointer; font-weight: 500; font-size: 1rem; }
         .radio-container input { display: none; }
         .custom-radio {
@@ -136,6 +134,14 @@
         }
 
         hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
+
+        /* MESSAGE DE SUCCÈS */
+        #thank-you-msg {
+            display: none;
+            padding: 40px 10px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
         footer { text-align: center; padding: 40px 20px; background: white; }
         .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -143,7 +149,6 @@
         .petal {
             position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
             border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 9999;
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
         @keyframes fall {
@@ -151,6 +156,8 @@
             10% { opacity: 0.8; }
             100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
         }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         @media (max-width: 480px) { .img-bague { height: 350px; } }
     </style>
@@ -190,74 +197,83 @@
         <a href="https://waze.com/ul?q=Ferreux+77560+Champcenest" target="_blank" class="btn-action btn-outline" style="margin-top: 15px;">Y aller avec Waze</a>
     </div>
 
-    <div class="wedding-card reveal">
-        <p class="card-type">Réponse</p>
-        <h3 class="card-title cormorant">Confirmation</h3>
-        <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
-            <div class="form-group">
-                <label class="required">Noms & Prénoms</label>
-                <input type="text" name="nom" required placeholder="Votre nom complet">
-            </div>
-
-            <hr>
-
-            <div class="form-group">
-                <label class="required">Présence à la mairie ?</label>
-                <select id="presence_mairie" name="presence_mairie" onchange="toggleMairie()" required>
-                    <option value="" disabled selected>Faites votre choix</option>
-                    <option value="oui">OUI</option>
-                    <option value="non">NON</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="group_mairie" style="display: none;">
-                <label class="required">Nombre de personnes (Mairie)</label>
-                <div class="radio-group">
-                    <label class="radio-container">
-                        <input type="radio" name="guests_mairie" value="1">
-                        <span class="custom-radio"></span> 1
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="guests_mairie" value="2">
-                        <span class="custom-radio"></span> 2
-                    </label>
+    <div class="wedding-card reveal" id="rsvp-card">
+        
+        <div id="form-container">
+            <p class="card-type">Réponse</p>
+            <h3 class="card-title cormorant">Confirmation</h3>
+            <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
+                <div class="form-group">
+                    <label class="required">Noms & Prénoms</label>
+                    <input type="text" name="nom" required placeholder="Votre nom complet">
                 </div>
-            </div>
 
-            <hr>
+                <hr>
 
-            <div class="form-group">
-                <label class="required">Présence à la houppa ?</label>
-                <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppa()" required>
-                    <option value="" disabled selected>Faites votre choix</option>
-                    <option value="oui">OUI</option>
-                    <option value="non">NON</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="group_houppa" style="display: none;">
-                <label class="required">Nombre de personnes (Houppa)</label>
-                <div class="radio-group">
-                    <label class="radio-container">
-                        <input type="radio" name="guests_houppa" value="1">
-                        <span class="custom-radio"></span> 1
-                    </label>
-                    <label class="radio-container">
-                        <input type="radio" name="guests_houppa" value="2">
-                        <span class="custom-radio"></span> 2
-                    </label>
+                <div class="form-group">
+                    <label class="required">Présence à la mairie ?</label>
+                    <select id="presence_mairie" name="presence_mairie" onchange="toggleMairie()" required>
+                        <option value="" disabled selected>Faites votre choix</option>
+                        <option value="oui">OUI</option>
+                        <option value="non">NON</option>
+                    </select>
                 </div>
-            </div>
 
-            <hr>
+                <div class="form-group" id="group_mairie" style="display: none;">
+                    <label class="required">Nombre de personnes (Mairie)</label>
+                    <div class="radio-group">
+                        <label class="radio-container">
+                            <input type="radio" name="guests_mairie" value="1">
+                            <span class="custom-radio"></span> 1
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="guests_mairie" value="2">
+                            <span class="custom-radio"></span> 2
+                        </label>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label>Message pour les mariés</label>
-                <textarea name="msg" rows="3" placeholder="Votre petit mot..."></textarea>
-            </div>
+                <hr>
 
-            <button type="submit" class="btn-action">Confirmer ma présence</button>
-        </form>
+                <div class="form-group">
+                    <label class="required">Présence à la houppa ?</label>
+                    <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppa()" required>
+                        <option value="" disabled selected>Faites votre choix</option>
+                        <option value="oui">OUI</option>
+                        <option value="non">NON</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="group_houppa" style="display: none;">
+                    <label class="required">Nombre de personnes (Houppa)</label>
+                    <div class="radio-group">
+                        <label class="radio-container">
+                            <input type="radio" name="guests_houppa" value="1">
+                            <span class="custom-radio"></span> 1
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="guests_houppa" value="2">
+                            <span class="custom-radio"></span> 2
+                        </label>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <label>Message pour les mariés</label>
+                    <textarea name="msg" rows="3" placeholder="Votre petit mot..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-action">Confirmer ma présence</button>
+            </form>
+        </div>
+
+        <div id="thank-you-msg">
+            <p class="cormorant" style="font-size: 2.5rem; color: var(--amber);">Merci de votre réponse !</p>
+            <p style="margin-top: 15px; opacity: 0.8;">Nous avons bien reçu votre confirmation.</p>
+            <p class="cormorant" style="font-size: 3rem; color: var(--fuchsia); margin-top: 20px;">Mazal Tov !</p>
+        </div>
     </div>
 
     <div class="image-section img-maison reveal"></div>
@@ -274,10 +290,7 @@
         const group = document.getElementById('group_mairie');
         const radios = group.querySelectorAll('input[type="radio"]');
         group.style.display = (presence === 'oui') ? 'block' : 'none';
-        radios.forEach(r => {
-            r.required = (presence === 'oui');
-            if (presence === 'non') r.checked = false;
-        });
+        radios.forEach(r => { r.required = (presence === 'oui'); });
     }
 
     function toggleHouppa() {
@@ -285,11 +298,28 @@
         const group = document.getElementById('group_houppa');
         const radios = group.querySelectorAll('input[type="radio"]');
         group.style.display = (presence === 'oui') ? 'block' : 'none';
-        radios.forEach(r => {
-            r.required = (presence === 'oui');
-            if (presence === 'non') r.checked = false;
-        });
+        radios.forEach(r => { r.required = (presence === 'oui'); });
     }
+
+    // GESTION DE L'ENVOI DU FORMULAIRE
+    const rsvpForm = document.getElementById('rsvpForm');
+    rsvpForm.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        // On récupère les données
+        const formData = new FormData(rsvpForm);
+        
+        // On simule/envoie réellement vers Formspree
+        fetch(rsvpForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        }).then(response => {
+            // Animation de switch vers le message de merci
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('thank-you-msg').style.display = 'block';
+        });
+    };
 
     function reveal() {
         var reveals = document.querySelectorAll(".reveal");
