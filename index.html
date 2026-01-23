@@ -37,22 +37,12 @@
             height: 100%;
             z-index: -1;
             filter: brightness(0.5) blur(4px);
-            
-            /* Animation de zoom continue */
+            /* Zoom fluide */
+            transform: scale(1.1);
             animation: zoomSlow 20s infinite alternate;
 
-            /* PAR DÉFAUT (Ordinateur) : Centré */
+            /* CENTRAGE PAR DÉFAUT (PC & MOBILE) */
             background: url('bisous.JPG') no-repeat center 35% / cover;
-        }
-
-        /* --- AJUSTEMENT POUR TOUS LES TÉLÉPHONES --- */
-        @media (max-width: 768px) {
-            .bg-image {
-                /* On décale encore plus (5% = presque le bord gauche de la photo) */
-                background-position: 5% 35%;
-                /* On augmente le zoom à 1.6 pour un effet plus rapproché */
-                transform: scale(1.6);
-            }
         }
 
         /* --- CONTENU --- */
@@ -144,7 +134,7 @@
         /* --- ANIMATIONS --- */
         @keyframes zoomSlow {
             from { transform: scale(1.1); }
-            to { transform: scale(1.4); } /* Animation de zoom sur ordi */
+            to { transform: scale(1.25); }
         }
 
         @keyframes fadeIn {
@@ -152,6 +142,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* AJUSTEMENT PETITS MOBILES */
         @media (max-width: 370px) {
             .unit { width: 55px; height: 55px; }
             .num { font-size: 1.3rem; }
