@@ -2,25 +2,26 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Karen & Yossef | L'Union</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Palette Sunset Tropical extraite de votre image */
             --fuchsia: #D82D7E;
             --coral: #FF7F50;
             --amber: #FFB347;
             --gold-light: #f4e4bc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        /* Optimisation Mobile : Empêcher le scroll et gérer la hauteur réelle */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             background-color: #0a0a0a;
             color: var(--gold-light);
             font-family: 'Montserrat', sans-serif;
-            height: 100vh;
+            height: 100vh; /* Repli pour navigateurs anciens */
+            height: 100dvh; /* Hauteur dynamique pour mobiles (ignore barres URL) */
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -31,108 +32,114 @@
         .bg-image {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            /* Position descendue à 10% pour un focus haut */
+            /* Ajustement background pour mobile : focus haut 10% */
             background: url('bisous.JPG') no-repeat center 10%/cover;
-            filter: brightness(0.3) blur(6px);
+            filter: brightness(0.3) blur(4px);
             z-index: -1;
             transform: scale(1.1);
             animation: zoomSlow 20s infinite alternate;
         }
 
-        .intro-container { z-index: 1; opacity: 0; animation: fadeIn 2s ease-out forwards 0.5s; }
+        .intro-container { 
+            z-index: 1; 
+            opacity: 0; 
+            animation: fadeIn 2s ease-out forwards 0.5s;
+            width: 100%;
+            padding: 0 20px;
+        }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-size: clamp(2.2rem, 10vw, 4.5rem);
             font-weight: 300;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            /* Teinte Fuchsia du thème */
             color: var(--fuchsia);
-            text-shadow: 0 0 20px rgba(216, 45, 126, 0.3);
+            line-height: 1.1;
         }
 
+        /* Compte à rebours optimisé pour petits écrans */
         .countdown-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px 0 50px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 40px auto;
         }
 
         .unit {
             display: flex;
             flex-direction: column;
-            min-width: 70px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 5px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(244, 228, 188, 0.1);
         }
 
         .num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 6vw, 2.2rem);
             font-weight: 600;
-            display: block;
-            /* Teinte Corail pour les chiffres */
             color: var(--coral);
         }
 
         .label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             opacity: 0.8;
-            color: var(--gold-light);
+            margin-top: 5px;
         }
 
         .date {
-            font-size: 1.1rem;
-            letter-spacing: 5px;
-            /* Bordures Ambre */
+            font-size: 1rem;
+            letter-spacing: 4px;
             border-top: 1px solid var(--amber);
             border-bottom: 1px solid var(--amber);
             display: inline-block;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            color: var(--gold-light);
+            padding: 8px 25px;
+            margin-bottom: 40px;
         }
 
+        /* Bouton format tel : Largeur confortable pour le pouce */
         .enter-btn {
-            display: inline-block;
+            display: block;
+            width: fit-content;
+            margin: 0 auto;
             text-decoration: none;
             color: #0a0a0a;
-            /* Dégradé Fuchsia vers Corail */
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            padding: 15px 45px;
+            padding: 18px 40px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.4s ease;
             font-weight: 600;
-            border: none;
+            border-radius: 2px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .enter-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 127, 80, 0.5);
-            filter: saturate(1.2);
-            color: #fff;
+        .enter-btn:active {
+            transform: scale(0.95);
         }
 
-        @keyframes zoomSlow { from { transform: scale(1.1); } to { transform: scale(1.2); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomSlow { from { transform: scale(1.1); } to { transform: scale(1.25); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        @media (max-width: 768px) {
-            .countdown-container { gap: 10px; }
-            .num { font-size: 1.8rem; }
-            .unit { min-width: 50px; }
-            h1 { font-size: 3rem; }
+        /* Ajustements spécifiques aux très petits téléphones */
+        @media (max-width: 360px) {
+            .countdown-container { gap: 5px; }
+            .unit { padding: 8px 2px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 <div class="bg-image"></div>
 <div class="intro-container">
-    <p style="letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 20px; opacity: 0.9; color: var(--amber);">VOUS ÊTES INVITÉS AU MARIAGE DE </p>
+    <p style="letter-spacing: 3px; font-size: 0.75rem; margin-bottom: 20px; color: var(--amber);">VOUS ÊTES INVITÉS AU MARIAGE DE </p>
     <h1>Karen & Yossef</h1>
 
     <div class="countdown-container" id="timer">
@@ -148,6 +155,7 @@
 </div>
 
 <script>
+    // Date cible
     const targetDate = new Date("June 9, 2026 13:30:00").getTime();
 
     function updateCountdown() {
@@ -165,10 +173,11 @@
             document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
             document.getElementById("secs").innerText = s < 10 ? "0" + s : s;
         } else {
-            document.getElementById("timer").innerHTML = "<h3 style='color:var(--fuchsia)'>C'est le grand jour !</h3>";
+            document.getElementById("timer").innerHTML = "<h3 style='grid-column: 1/-1; color:var(--fuchsia)'>C'est le grand jour !</h3>";
         }
     }
 
+    // Intervalle de mise à jour 1s
     setInterval(updateCountdown, 1000);
     updateCountdown();
 </script>
