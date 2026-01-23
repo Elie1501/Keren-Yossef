@@ -28,7 +28,6 @@
 
         .cormorant { font-family: 'Cormorant Garamond', serif; }
 
-        /* --- HEADER --- */
         header {
             height: 55vh;
             display: flex;
@@ -44,7 +43,7 @@
             width: clamp(150px, 40vw, 220px);
             filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
             margin-bottom: 15px;
-            opacity: 0.7; /* Opacité réduite */
+            opacity: 0.7;
             animation: float 4s ease-in-out infinite;
         }
 
@@ -61,7 +60,6 @@
             z-index: 10;
         }
 
-        /* --- CARTES --- */
         .wedding-card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
@@ -81,7 +79,6 @@
             background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
         }
 
-        /* --- SECTIONS IMAGES --- */
         .image-section {
             width: 100%;
             border-radius: 15px;
@@ -93,7 +90,7 @@
         }
 
         .img-bague {
-            height: 450px; /* Grande photo bague */
+            height: 450px;
             background: url('bague.JPG') no-repeat center center / cover;
         }
 
@@ -107,7 +104,6 @@
             box-shadow: 0 12px 30px rgba(216, 45, 126, 0.2);
         }
 
-        /* --- TEXTES & BOUTONS --- */
         .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--fuchsia); margin-bottom: 10px; font-weight: 600; }
         .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
         .highlight { color: var(--fuchsia); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
@@ -126,10 +122,10 @@
             margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
         }
 
-        /* --- FORMULAIRE RSVP --- */
         .rsvp-form { text-align: left; margin-top: 20px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 5px; color: #555; text-transform: uppercase; }
+        .required::after { content: " *"; color: var(--fuchsia); }
         input, select, textarea { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; }
         hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
 
@@ -138,7 +134,6 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- PÉTALES --- */
         .petal {
             position: fixed;
             background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
@@ -199,46 +194,46 @@
     <div class="wedding-card reveal">
         <p class="card-type">Réponse</p>
         <h3 class="card-title cormorant">Confirmation</h3>
-        <form id="rsvpForm" class="rsvp-form">
+        <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
             <div class="form-group">
-                <label>Noms & Prénoms</label>
+                <label class="required">Noms & Prénoms</label>
                 <input type="text" name="nom" required placeholder="Votre nom complet">
             </div>
 
             <hr>
 
             <div class="form-group">
-                <label>Serez-vous présent à la mairie ?</label>
-                <select id="presence_mairie" name="presence_mairie" onchange="toggleMairieFields()">
+                <label class="required">Serez-vous présent à la mairie ?</label>
+                <select id="presence_mairie" name="presence_mairie" onchange="toggleMairieFields()" required>
                     <option value="non">NON</option>
                     <option value="oui">OUI</option>
                 </select>
             </div>
 
             <div class="form-group" id="group_nb_mairie" style="display: none;">
-                <label>Nombre de personnes à la mairie (limité à 2)</label>
+                <label class="required">Nombre de personnes</label>
                 <input type="number" name="guests_mairie" min="1" max="2" value="1">
             </div>
 
             <hr>
 
             <div class="form-group">
-                <label>Serez-vous présent à la houppa ?</label>
-                <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppaFields()">
+                <label class="required">Serez-vous présent à la houppa ?</label>
+                <select id="presence_houppa" name="presence_houppa" onchange="toggleHouppaFields()" required>
                     <option value="non">NON</option>
                     <option value="oui">OUI</option>
                 </select>
             </div>
 
             <div class="form-group" id="group_nb_houppa" style="display: none;">
-                <label>Nombre de personnes à la houppa</label>
-                <input type="number" name="guests_houppa" min="1" max="10" value="1">
+                <label class="required">Nombre de personnes</label>
+                <input type="number" name="guests_houppa" min="1" max="2" value="1">
             </div>
 
             <hr>
 
             <div class="form-group">
-                <label>Message pour les mariés (Facultatif)</label>
+                <label>Message pour les mariés</label>
                 <textarea name="msg" rows="3" placeholder="Votre petit mot..."></textarea>
             </div>
 
