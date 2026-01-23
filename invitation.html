@@ -3,187 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation - 09.06.2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <title>Invitation | Karen & Yossef</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --fuchsia: #D82D7E; --amber: #FFB347; --coral: #FF7F50; --beige: #F9F7F2;
+            --fuchsia: #D82D7E;
+            --coral: #FF7F50;
+            --amber: #B8860B;
+            --soft-white: #FDFBF7;
+            --text-dark: #2c2c2c;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: linear-gradient(rgba(249, 247, 242, 0.9), rgba(249, 247, 242, 0.9)), url('fond_gallerie.jpg') center/cover fixed;
-            font-family: 'Inter', sans-serif;
-            color: #333;
+            background-color: var(--soft-white);
+            color: var(--text-dark);
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
+            background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
+            line-height: 1.5;
         }
 
-        /* Décor floral flottant */
-        .decor-flower {
-            position: fixed;
-            top: 50%;
-            right: -5%;
-            transform: translateY(-50%);
-            width: 400px; /* Taille de l'image fleur.jpg */
-            z-index: -1;
-            opacity: 0.8;
-            pointer-events: none;
-        }
+        .cormorant { font-family: 'Cormorant Garamond', serif; }
 
-        .container { max-width: 1000px; margin: auto; padding: 80px 20px; position: relative; }
-
-        h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; text-align: center; color: var(--fuchsia); margin-bottom: 50px; }
-
-        /* Grandes Cartes */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            margin-bottom: 50px;
-            padding: 60px; /* Cartes plus grandes */
-            border-radius: 30px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-            opacity: 0; transform: translateY(40px);
-            transition: 1s all ease;
-            backdrop-filter: blur(10px);
-        }
-        .card.active { opacity: 1; transform: translateY(0); }
-
-        .card h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 20px; color: var(--coral); }
-        .card p { font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto 15px; }
-
-        .btn-waze {
-            background: #33DBFF; color: white; padding: 15px 30px;
-            border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 600; transition: 0.3s;
-        }
-
-        /* Lecteur Musique sur le côté */
-        #music-control {
-            position: fixed;
-            right: 30px;
-            bottom: 30px;
-            z-index: 100;
-            background: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        header {
+            height: 50vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            border: 2px solid var(--fuchsia);
-            transition: 0.3s;
-        }
-        #music-control:hover { transform: scale(1.1); }
-        .icon-music { font-size: 24px; }
-
-        /* RSVP */
-        #rsvp { background: white; padding: 60px; border-radius: 30px; border-top: 8px solid var(--amber); }
-        .form-group { margin-bottom: 30px; text-align: left; }
-        .hidden { display: none; }
-        input, textarea { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 12px; margin-top: 10px; font-size: 1rem; }
-
-        .btn-submit {
-            width: 100%; padding: 20px; background: var(--fuchsia); color: white;
-            border-radius: 50px; border: none; font-weight: 600; cursor: pointer; font-size: 1.1rem;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.1), var(--soft-white)), url('maisonVueHauteur.JPG') no-repeat center center / cover;
+            text-align: center;
+            padding: 20px;
         }
 
-        @media (max-width: 768px) {
-            .decor-flower { width: 200px; right: -10%; opacity: 0.4; }
-            .card { padding: 30px; }
-            h2 { font-size: 2.5rem; }
+        .logo-main {
+            width: clamp(150px, 40vw, 250px);
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+            margin-bottom: 15px;
+        }
+
+        .container {
+            max-width: 650px; /* Plus étroit pour éviter l'étalement */
+            margin: -30px auto 40px;
+            padding: 0 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .wedding-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            position: relative;
+        }
+
+        .wedding-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
+        }
+
+        .card-type {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--fuchsia);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .card-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            color: var(--amber);
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--fuchsia);
+            font-weight: 600;
+            display: block;
+            margin: 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .location-hint {
+            font-size: 0.85rem;
+            color: #777;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* --- FORMULAIRE COMPACT --- */
+        .rsvp-form { text-align: left; margin-top: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label {
+            display: block; font-size: 0.75rem; font-weight: 600;
+            margin-bottom: 5px; color: #555; text-transform: uppercase;
+        }
+        input, select, textarea {
+            width: 100%; padding: 10px; border: 1px solid #e0e0e0;
+            border-radius: 8px; font-family: inherit; font-size: 0.95rem;
+        }
+
+        .btn-action {
+            display: inline-flex; justify-content: center; width: 100%;
+            padding: 14px; background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            color: white; text-decoration: none; border-radius: 50px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            border: none; cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-outline {
+            background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
+            margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
+        }
+
+        .image-section {
+            width: 100%; height: 250px; margin: 25px 0;
+            border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .img-bague { background: url('bague.JPG') no-repeat center center / cover; }
+        .img-maison { background: url('maison.JPG') no-repeat center center / cover; }
+
+        footer { text-align: center; padding: 40px 20px; background: white; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 480px) {
+            .container { margin-top: -20px; }
+            .wedding-card { padding: 20px 15px; }
+            .image-section { height: 200px; }
         }
     </style>
 </head>
 <body>
 
-<img src="fleur.png" alt="Décor floral" class="decor-flower">
-
-<div id="music-control" onclick="toggleMusic()">
-    <span class="icon-music" id="music-btn">🎵</span>
-</div>
-<audio id="bg-music" loop>
-    <source src="musique.mp3" type="audio/mpeg">
-</audio>
+<header>
+    <img src="logo.JPG" alt="Karen & Yossef" class="logo-main">
+    <p class="cormorant" style="font-size: 1.4rem; color: var(--amber); font-style: italic;">Sous le regard de Hachem</p>
+</header>
 
 <div class="container">
-    <h2>Une Journée Magique</h2>
 
-    <div class="card">
-        <h3>🏛️ La Cérémonie Civile</h3>
-        <p>C'est avec une immense joie que nous vous accueillerons pour célébrer notre union civile devant Monsieur le Maire.</p>
-        <p><strong>Mairie de Charenton-le-Pont<br>Mardi 9 Juin 2026 à 13h30</strong></p>
+    <div class="wedding-card reveal">
+        <p class="card-type">Union Civile</p>
+        <h3 class="card-title cormorant">La Mairie</h3>
+        <div class="card-body">
+            <span class="highlight">Mardi 9 Juin 2026</span>
+            À la Mairie de <strong>CHARENTON-LE-PONT</strong><br>
+            Cérémonie à : <span style="color:var(--coral); font-weight:600;">13H30</span>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-action btn-outline">Itinéraire</a>
     </div>
 
-    <div class="card">
-        <h3>✡️ La Cérémonie Religieuse</h3>
-        <p>Sous la Houppa fleurie, nous échangerons nos vœux dans le respect de nos traditions et entourés de votre affection.</p>
-        <p>Un moment de spiritualité et d'émotion pure à ne pas manquer.</p>
+    <div class="image-section img-bague reveal"></div>
+
+    <div class="wedding-card reveal" style="border: 1px solid rgba(184, 134, 11, 0.3);">
+        <p class="card-type">Cérémonie Religieuse</p>
+        <h3 class="card-title cormorant">La Houppa</h3>
+        <div class="card-body">
+            <span class="cormorant" style="font-size: 2.2rem; color: var(--fuchsia); display: block; margin-bottom: 10px;">Karen & Yossef</span>
+            <span class="highlight">Dimanche 14 Juin 2026</span>
+            Au <strong>CHÂTEAU DES HAUTS DE PROVINS</strong>
+            <p class="location-hint">(À 1 heure de Paris)</p>
+            Début de la cérémonie : <span style="color:var(--coral); font-weight:600;">16H30</span>
+        </div>
+        <a href="https://waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline" style="margin-top: 15px;">Ouvrir Waze</a>
     </div>
 
-    <div class="card">
-        <h3>🏰 Le Cocktail & Dîner</h3>
-        <p>La fête se poursuivra dans le cadre enchanteur du Château des Hauts de Provins.</p>
-        <p>Préparez-vous pour une soirée inoubliable sous le signe du partage et de la danse.</p>
-        <p><strong>Début des festivités : 16h30</strong></p>
-        <a href="https://waze.com/ul?q=Chateau%20des%20Hauts%20de%20Provins&navigate=yes" class="btn-waze" target="_blank">📍 Itinéraire Waze</a>
-    </div>
-
-    <div id="rsvp" class="card">
-        <h3>RSVP</h3>
-        <p>Merci de nous confirmer votre présence avant le 1er Mai 2026.</p>
-        <form id="rsvp-form">
+    <div class="wedding-card reveal">
+        <p class="card-type">Réponse</p>
+        <h3 class="card-title cormorant">Confirmation</h3>
+        <form id="rsvpForm" class="rsvp-form">
             <div class="form-group">
-                <label>Serez-vous présent ?</label><br><br>
-                <input type="radio" name="presence" value="oui" id="y" style="width:auto"> <label for="y">Oui, je viens !</label>
-                <input type="radio" name="presence" value="non" id="n" style="width:auto; margin-left: 20px;"> <label for="n">Non, hélas</label>
+                <label>Nom & Prénom</label>
+                <input type="text" name="nom" required placeholder="Votre nom">
             </div>
-
-            <div id="guest-field" class="hidden">
-                <label>Nombre de personnes :</label>
+            <div class="form-group">
+                <label>Serez-vous présent ?</label>
+                <select id="presence" name="presence" onchange="toggleGuestFields()">
+                    <option value="oui">OUI, avec plaisir !</option>
+                    <option value="non">NON, j'ai un empêchement</option>
+                </select>
+            </div>
+            <div class="form-group" id="guest-count-group">
+                <label>Nombre de personnes</label>
                 <input type="number" name="guests" min="1" max="10" value="1">
             </div>
-
             <div class="form-group">
-                <label>Un petit mot doux :</label>
-                <textarea rows="4" placeholder="Votre message pour Elie et [Prénom]..."></textarea>
+                <label>Un message ?</label>
+                <textarea name="msg" rows="2"></textarea>
             </div>
-
-            <button type="submit" class="btn-submit">Envoyer ma réponse</button>
+            <button type="submit" class="btn-action">Confirmer</button>
         </form>
     </div>
+
+    <div class="image-section img-maison reveal"></div>
 </div>
 
+<footer>
+    <p class="cormorant" style="font-size: 1.4rem; color: var(--amber);">Hâte de célébrer avec vous</p>
+    <p style="font-size: 0.65rem; letter-spacing: 2px; margin-top: 10px; color: #aaa;">K&Y - 2026</p>
+</footer>
+
 <script>
-    // Animations au scroll
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
-    });
-    document.querySelectorAll('.card').forEach(c => obs.observe(c));
-
-    // Musique
-    const audio = document.getElementById('bg-music');
-    const btn = document.getElementById('music-btn');
-    let isPlaying = false;
-
-    function toggleMusic() {
-        if (isPlaying) {
-            audio.pause();
-            btn.innerText = "🔇";
-        } else {
-            audio.play();
-            btn.innerText = "🎵";
-        }
-        isPlaying = !isPlaying;
+    function toggleGuestFields() {
+        const presence = document.getElementById('presence').value;
+        document.getElementById('guest-count-group').style.display = (presence === 'non') ? 'none' : 'block';
     }
-
-    // Logique Formulaire
-    document.querySelectorAll('input[name="presence"]').forEach(r => {
-        r.addEventListener('change', (e) => {
-            document.getElementById('guest-field').classList.toggle('hidden', e.target.value === 'non');
-        });
-    });
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
 </script>
 </body>
 </html>
