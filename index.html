@@ -13,7 +13,12 @@
             --gold-light: #f4e4bc;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             background-color: #0a0a0a;
@@ -26,6 +31,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            position: relative;
         }
 
         /* --- CONFIGURATION DE L'IMAGE DE FOND --- */
@@ -36,22 +42,25 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            filter: brightness(0.5) blur(4px);
-            
-            /* Animation de zoom fluide */
-            animation: zoomSlow 20s infinite alternate;
+            filter: brightness(0.4) blur(1px);
 
-            /* POSITION CENTRÉE PAR DÉFAUT (PC) */
-            background: url('bisous.JPG') no-repeat center 35% / cover;
+            /* Centrage horizontal et calé sur le haut */
+            background: url('bisousfront.jpg') no-repeat center top / cover;
+
+            /* Animation très légère pour éviter de couper les têtes */
+            animation: zoomSlow 15s infinite alternate ease-in-out;
+            transform-origin: center top;
         }
 
-        /* --- AJUSTEMENT SPÉCIFIQUE MOBILE (TOUS MODÈLES) --- */
+        /* --- RENDU MOBILE --- */
         @media (max-width: 768px) {
             .bg-image {
-                /* On force le milieu de l'image au milieu de l'écran */
-                background-position: center 35%;
-                /* On augmente le zoom pour s'adapter aux écrans verticaux */
-                transform: scale(1.3);
+                background-position: center top;
+            }
+
+            h1 {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                letter-spacing: 2px;
             }
         }
 
@@ -62,17 +71,18 @@
             animation: fadeIn 2s ease-out forwards 0.5s;
             width: 100%;
             padding: 0 20px;
+            margin-top: 60px;
         }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 9vw, 3.5rem);
+            font-size: clamp(2.2rem, 10vw, 3.5rem);
             font-weight: 300;
             letter-spacing: 4px;
             margin-bottom: 10px;
             text-transform: uppercase;
             color: var(--fuchsia);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.8);
         }
 
         .countdown-container {
@@ -89,9 +99,9 @@
             align-items: center;
             width: 65px;
             height: 65px;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(244, 228, 188, 0.2);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
             border-radius: 4px;
         }
 
@@ -104,59 +114,64 @@
         }
 
         .label {
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-top: 4px;
         }
 
         .date {
             font-size: 0.9rem;
             letter-spacing: 4px;
-            border-top: 1px solid rgba(255, 179, 71, 0.3);
-            border-bottom: 1px solid rgba(255, 179, 71, 0.3);
+            border-top: 1px solid rgba(255, 179, 71, 0.4);
+            border-bottom: 1px solid rgba(255, 179, 71, 0.4);
             display: inline-block;
-            padding: 6px 15px;
+            padding: 8px 20px;
             margin-bottom: 30px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         .enter-btn {
             display: inline-block;
             text-decoration: none;
-            color: #0a0a0a;
+            color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
             padding: 14px 0;
-            width: 200px;
+            width: 210px;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 600;
             border-radius: 50px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(216, 45, 126, 0.4);
+            cursor: pointer;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(216, 45, 126, 0.6);
         }
 
         .enter-btn:active { transform: scale(0.95); }
 
         /* --- ANIMATIONS --- */
         @keyframes zoomSlow {
-            from { transform: scale(1.1); }
-            to { transform: scale(1.4); }
+            from { transform: scale(1); }
+            to { transform: scale(1.05); } /* Zoom réduit pour plus de stabilité */
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* AJUSTEMENT ÉCRANS TRÈS PETITS */
         @media (max-width: 370px) {
             .unit { width: 55px; height: 55px; }
             .num { font-size: 1.3rem; }
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 1.7rem; }
         }
     </style>
 </head>
@@ -165,7 +180,7 @@
 <div class="bg-image"></div>
 
 <div class="intro-container">
-    <p style="letter-spacing: 3px; font-size: 0.7rem; margin-bottom: 15px; opacity: 0.8; color: var(--amber);">VOUS ÊTES INVITÉS</p>
+    <p style="letter-spacing: 4px; font-size: 0.75rem; margin-bottom: 15px; color: var(--amber); font-weight: 400;">VOUS ÊTES INVITÉS</p>
     <h1>Karen & Yossef</h1>
 
     <div class="countdown-container" id="timer">
@@ -193,12 +208,12 @@
             const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((difference % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = d < 10 ? "0" + d : d;
-            document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
-            document.getElementById("mins").innerText = m < 10 ? "0" + m : m;
-            document.getElementById("secs").innerText = s < 10 ? "0" + s : s;
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("mins").innerText = m.toString().padStart(2, '0');
+            document.getElementById("secs").innerText = s.toString().padStart(2, '0');
         } else {
-            document.getElementById("timer").innerHTML = "<h3 style='color:var(--coral)'>C'est le grand jour !</h3>";
+            document.getElementById("timer").innerHTML = "<h3 style='color:var(--coral); font-family:\"Cormorant Garamond\", serif; font-size: 1.5rem;'>C'est le grand jour !</h3>";
         }
     }
 
