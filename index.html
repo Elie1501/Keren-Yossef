@@ -43,7 +43,6 @@
             z-index: -1;
             filter: brightness(0.4);
             background: url('bisousfront.jpg') no-repeat center top / cover;
-            /* Animation zoom supprimée ici */
         }
 
         .intro-container {
@@ -55,7 +54,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 80px; /* Espace pour le bouton fixe */
+            margin-bottom: 120px; /* Espace augmenté pour le bouton remonté */
         }
 
         h1 {
@@ -125,14 +124,15 @@
             min-width: 250px;
         }
 
-        /* --- BOUTON LARGE ET FIXE EN BAS --- */
+        /* --- BOUTON LARGE ET FIXE (REMONTÉ) --- */
         .btn-fixed-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 20px 20px 40px 20px; /* Padding pour le confort du pouce */
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            /* Padding augmenté en bas pour remonter le bouton */
+            padding: 20px 20px 80px 20px; 
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
             z-index: 10;
             display: flex;
             justify-content: center;
@@ -143,16 +143,16 @@
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            width: 100%; /* Largeur maximale */
+            width: 100%;
             max-width: 400px;
-            padding: 20px 0;
+            padding: 22px 0;
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 4px;
             font-weight: 600;
             border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.4);
+            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.5);
             cursor: pointer;
             transition: transform 0.2s ease;
         }
@@ -169,7 +169,8 @@
         @media (max-width: 480px) {
             h1 { font-size: 3.8rem; }
             .unit { width: 60px; height: 60px; }
-            .enter-btn { font-size: 0.9rem; padding: 18px 0; }
+            /* Ajustement pour les petits écrans mobiles */
+            .btn-fixed-container { padding-bottom: 70px; } 
         }
     </style>
 </head>
