@@ -53,6 +53,9 @@
             animation: fadeIn 2s ease-out forwards 0.5s;
             width: 100%;
             padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -76,7 +79,6 @@
             text-transform: uppercase;
         }
 
-        /* --- CHRONO CARRÉ --- */
         .countdown-container {
             display: flex;
             justify-content: center;
@@ -94,7 +96,7 @@
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(244, 228, 188, 0.2);
             backdrop-filter: blur(8px);
-            border-radius: 4px; /* Forme carrée */
+            border-radius: 4px;
         }
 
         .num {
@@ -116,7 +118,6 @@
             font-size: 1rem;
             letter-spacing: 5px;
             padding: 10px 0;
-            margin-bottom: 40px;
             font-weight: 200;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -124,26 +125,30 @@
             min-width: 250px;
         }
 
+        /* --- BOUTON AGRANDI ET DESCENDU --- */
         .enter-btn {
             display: inline-block;
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            padding: 16px 40px;
+            margin-top: 60px; /* Descend le bouton */
+            padding: 20px 0; /* Plus haut */
+            width: 85%; /* Plus large sur mobile */
+            max-width: 320px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
+            font-size: 1rem; /* Texte plus grand */
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             font-weight: 600;
             border-radius: 50px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.3);
+            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.4);
             cursor: pointer;
         }
 
         .enter-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(216, 45, 126, 0.5);
+            box-shadow: 0 15px 40px rgba(216, 45, 126, 0.6);
         }
 
         @keyframes zoomSlow {
@@ -159,6 +164,7 @@
         @media (max-width: 480px) {
             h1 { font-size: 3.8rem; }
             .unit { width: 60px; height: 60px; }
+            .enter-btn { margin-top: 50px; padding: 22px 0; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -178,7 +184,7 @@
     </div>
 
     <p class="date">14 JUIN 2026</p>
-    <br>
+
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
 
