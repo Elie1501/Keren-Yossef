@@ -21,8 +21,8 @@
         }
 
         body, html {
-            height: 100%;
-            width: 100%;
+            height: 100dvh;
+            width: 100vw;
             margin: 0;
             overflow: hidden;
             background-color: #0a0a0a;
@@ -37,6 +37,7 @@
             position: relative;
         }
 
+        /* --- IMAGE DE FOND --- */
         .bg-image {
             position: absolute;
             top: 0;
@@ -45,10 +46,14 @@
             height: 100%;
             z-index: -1;
             filter: brightness(0.4);
-            background: url('bisousfront.jpg') no-repeat center top / cover;
+            background-image: url('bisousfront.jpg'); /* Vérifie que le nom est exact */
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            background-color: #0a0a0a; /* Couleur de secours */
         }
 
-        /* --- CONTAINER PRINCIPAL RESPONSIVE --- */
+        /* --- CONTAINER PRINCIPAL --- */
         .main-wrapper {
             z-index: 1;
             opacity: 0;
@@ -57,16 +62,20 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100dvh;
+            height: 100%;
             width: 100%;
             padding: 20px;
+        }
+
+        .content-block {
+            width: 100%;
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: clamp(3.2rem, 12vw, 5.5rem);
             font-weight: 400;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             color: #fff;
             text-shadow: 2px 2px 20px rgba(0,0,0,0.8);
             background: linear-gradient(to bottom, #fff, var(--gold-light));
@@ -78,7 +87,7 @@
             display: flex;
             justify-content: center;
             gap: clamp(8px, 2vw, 15px);
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         .unit {
@@ -86,8 +95,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: clamp(55px, 15vw, 65px);
-            height: clamp(55px, 15vw, 65px);
+            width: clamp(58px, 16vw, 70px);
+            height: clamp(58px, 16vw, 70px);
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(244, 228, 188, 0.2);
             backdrop-filter: blur(8px);
@@ -95,7 +104,7 @@
         }
 
         .num {
-            font-size: clamp(1.1rem, 4vw, 1.4rem);
+            font-size: clamp(1.2rem, 4.5vw, 1.5rem);
             font-weight: 600;
             color: #fff;
             line-height: 1;
@@ -110,45 +119,45 @@
         }
 
         .date {
-            font-size: clamp(0.8rem, 3vw, 1rem);
+            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
             letter-spacing: 5px;
             padding: 12px 0;
             font-weight: 200;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             display: inline-block;
-            min-width: 220px;
-            margin-bottom: 40px;
+            min-width: 240px;
+            margin-bottom: 40px; /* Espace avant le bouton */
         }
 
-        /* --- BOUTON ADAPTATIF --- */
+        /* --- BOUTON OPTIMISÉ --- */
         .enter-btn {
             position: relative;
             display: block;
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            width: 80%;
-            max-width: 300px;
+            width: 70%; /* Longueur réduite pour plus d'élégance */
+            max-width: 280px;
             padding: 18px 0;
             font-family: 'Montserrat', sans-serif;
-            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
             border-radius: 50px;
             box-shadow: 0 10px 30px rgba(216, 45, 126, 0.5);
             overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease;
         }
 
-        /* Effet Shimmer */
+        /* Effet Brillance */
         .enter-btn::after {
             content: "";
             position: absolute;
             top: -50%;
             left: -60%;
-            width: 30%;
+            width: 25%;
             height: 200%;
             background: rgba(255, 255, 255, 0.3);
             transform: rotate(30deg);
@@ -166,24 +175,16 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- AJUSTEMENTS SPÉCIFIQUES --- */
-
-        /* Écrans très petits (iPhone SE) */
+        /* --- MOBILE SMALL (iPhone SE) --- */
         @media (max-height: 670px) {
-            h1 { font-size: 3rem; }
-            .date { margin-bottom: 20px; }
-            .main-wrapper { justify-content: space-evenly; }
-        }
-
-        /* Tablettes et Desktop */
-        @media (min-width: 768px) {
-            .enter-btn { padding: 22px 0; max-width: 350px; }
-            .unit { width: 80px; height: 80px; }
-            .num { font-size: 1.8rem; }
+            h1 { font-size: 3.2rem; }
+            .countdown-container { margin: 15px 0; }
+            .date { margin-bottom: 30px; }
+            .main-wrapper { justify-content: center; }
         }
     </style>
 </head>
