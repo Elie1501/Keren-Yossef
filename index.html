@@ -54,7 +54,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 140px; /* Plus d'espace pour le bouton remonté */
+            margin-bottom: 180px; 
         }
 
         h1 {
@@ -82,7 +82,7 @@
             display: flex;
             justify-content: center;
             gap: 12px;
-            margin: 30px 0 40px 0;
+            margin: 20px 0 30px 0;
         }
 
         .unit {
@@ -90,8 +90,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(244, 228, 188, 0.2);
             backdrop-filter: blur(8px);
@@ -99,14 +99,14 @@
         }
 
         .num {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #fff;
             line-height: 1;
         }
 
         .label {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
@@ -114,51 +114,50 @@
         }
 
         .date {
-            font-size: 1rem;
+            font-size: 0.9rem;
             letter-spacing: 5px;
             padding: 10px 0;
             font-weight: 200;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: inline-block;
-            min-width: 250px;
+            min-width: 230px;
         }
 
-        /* --- BOUTON FIXE ENCORE PLUS REMONTÉ --- */
+        /* --- BOUTON LARGEUR RÉDUITE ET REMONTÉ --- */
         .btn-fixed-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 20px 20px 120px 20px; /* Remonté significativement */
+            padding: 20px 20px 180px 20px; 
             z-index: 10;
             display: flex;
             justify-content: center;
-            pointer-events: none; /* Permet de cliquer à travers le container si besoin */
+            pointer-events: none;
         }
 
         .enter-btn {
-            pointer-events: auto; /* Réactive le clic sur le bouton lui-même */
+            pointer-events: auto;
             position: relative;
             display: block;
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            width: 100%;
-            max-width: 400px;
-            padding: 22px 0;
+            width: 70%; /* Longueur réduite */
+            max-width: 280px; /* Limite la largeur max */
+            padding: 18px 0; /* Un peu moins haut pour l'équilibre */
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 0.85rem; /* Texte ajusté à la taille */
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             font-weight: 600;
             border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.5);
-            overflow: hidden; /* Important pour l'effet de brillance */
+            box-shadow: 0 15px 35px rgba(216, 45, 126, 0.5);
+            overflow: hidden;
             transition: transform 0.2s ease;
         }
 
-        /* --- EFFET DE BRILLANCE --- */
         .enter-btn::after {
             content: "";
             position: absolute;
@@ -187,9 +186,9 @@
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 3.8rem; }
-            .unit { width: 60px; height: 60px; }
-            .btn-fixed-container { padding-bottom: 100px; } /* Ajusté pour mobile */
+            h1 { font-size: 3.5rem; }
+            .btn-fixed-container { padding-bottom: 160px; } 
+            .enter-btn { width: 75%; } /* Un peu plus large sur petit mobile */
         }
     </style>
 </head>
