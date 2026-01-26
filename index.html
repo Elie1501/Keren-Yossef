@@ -20,16 +20,13 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        body, html {
+        body {
+            background-color: #0a0a0a;
+            color: var(--gold-light);
+            font-family: 'Montserrat', sans-serif;
             height: 100dvh;
             width: 100vw;
-            margin: 0;
             overflow: hidden;
-            background-color: #0a0a0a;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,7 +34,6 @@
             position: relative;
         }
 
-        /* --- IMAGE DE FOND --- */
         .bg-image {
             position: absolute;
             top: 0;
@@ -46,34 +42,24 @@
             height: 100%;
             z-index: -1;
             filter: brightness(0.4);
-            background-image: url('bisousfront.jpg'); /* Vérifie que le nom est exact */
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-color: #0a0a0a; /* Couleur de secours */
+            background: url('bisousfront.jpg') no-repeat center top / cover;
         }
 
-        /* --- CONTAINER PRINCIPAL --- */
-        .main-wrapper {
+        .intro-container {
             z-index: 1;
             opacity: 0;
             animation: fadeIn 2s ease-out forwards 0.5s;
+            width: 100%;
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100%;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .content-block {
-            width: 100%;
+            margin-bottom: 180px; 
         }
 
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(3.2rem, 12vw, 5.5rem);
+            font-size: clamp(3.5rem, 15vw, 5.5rem);
             font-weight: 400;
             margin-bottom: 5px;
             color: #fff;
@@ -83,11 +69,20 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 5px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            color: var(--amber);
+            text-transform: uppercase;
+        }
+
         .countdown-container {
             display: flex;
             justify-content: center;
-            gap: clamp(8px, 2vw, 15px);
-            margin: 25px 0;
+            gap: 12px;
+            margin: 20px 0 30px 0;
         }
 
         .unit {
@@ -95,23 +90,23 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: clamp(58px, 16vw, 70px);
-            height: clamp(58px, 16vw, 70px);
+            width: 60px;
+            height: 60px;
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(244, 228, 188, 0.2);
             backdrop-filter: blur(8px);
-            border-radius: 6px;
+            border-radius: 4px;
         }
 
         .num {
-            font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+            font-size: 1.3rem;
             font-weight: 600;
             color: #fff;
             line-height: 1;
         }
 
         .label {
-            font-size: clamp(0.45rem, 2vw, 0.55rem);
+            font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
@@ -119,72 +114,81 @@
         }
 
         .date {
-            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+            font-size: 0.9rem;
             letter-spacing: 5px;
-            padding: 12px 0;
+            padding: 10px 0;
             font-weight: 200;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: inline-block;
-            min-width: 240px;
-            margin-bottom: 40px; /* Espace avant le bouton */
+            min-width: 230px;
         }
 
-        /* --- BOUTON OPTIMISÉ --- */
+        /* --- BOUTON LARGEUR RÉDUITE ET REMONTÉ --- */
+        .btn-fixed-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 20px 180px 20px; 
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+        }
+
         .enter-btn {
+            pointer-events: auto;
             position: relative;
             display: block;
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            width: 70%; /* Longueur réduite pour plus d'élégance */
-            max-width: 280px;
-            padding: 18px 0;
+            width: 70%; /* Longueur réduite */
+            max-width: 280px; /* Limite la largeur max */
+            padding: 18px 0; /* Un peu moins haut pour l'équilibre */
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.85rem; /* Texte ajusté à la taille */
             text-transform: uppercase;
             letter-spacing: 3px;
             font-weight: 600;
             border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(216, 45, 126, 0.5);
+            box-shadow: 0 15px 35px rgba(216, 45, 126, 0.5);
             overflow: hidden;
             transition: transform 0.2s ease;
         }
 
-        /* Effet Brillance */
         .enter-btn::after {
             content: "";
             position: absolute;
             top: -50%;
             left: -60%;
-            width: 25%;
+            width: 20%;
             height: 200%;
             background: rgba(255, 255, 255, 0.3);
             transform: rotate(30deg);
-            animation: shine 4s infinite;
+            animation: shine 3s infinite;
         }
 
         @keyframes shine {
             0% { left: -60%; }
-            15% { left: 120%; }
+            20% { left: 120%; }
             100% { left: 120%; }
         }
 
         .enter-btn:active {
-            transform: scale(0.96);
+            transform: scale(0.97);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- MOBILE SMALL (iPhone SE) --- */
-        @media (max-height: 670px) {
-            h1 { font-size: 3.2rem; }
-            .countdown-container { margin: 15px 0; }
-            .date { margin-bottom: 30px; }
-            .main-wrapper { justify-content: center; }
+        @media (max-width: 480px) {
+            h1 { font-size: 3.5rem; }
+            .btn-fixed-container { padding-bottom: 160px; } 
+            .enter-btn { width: 75%; } /* Un peu plus large sur petit mobile */
         }
     </style>
 </head>
@@ -192,20 +196,20 @@
 
 <div class="bg-image"></div>
 
-<div class="main-wrapper">
-    <div class="content-block">
-        <h1>Karen & Yossef</h1>
+<div class="intro-container">
+    <h1>Karen & Yossef</h1>
 
-        <div class="countdown-container" id="timer">
-            <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
-            <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
-            <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
-            <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
-        </div>
-
-        <p class="date">14 JUIN 2026</p>
+    <div class="countdown-container" id="timer">
+        <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
+        <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
+        <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
+        <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
     </div>
-    
+
+    <p class="date">14 JUIN 2026</p>
+</div>
+
+<div class="btn-fixed-container">
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
 
