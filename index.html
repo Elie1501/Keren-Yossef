@@ -41,10 +41,9 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            filter: brightness(0.4) blur(1px);
+            filter: brightness(0.4);
             background: url('bisousfront.jpg') no-repeat center top / cover;
-            animation: zoomSlow 15s infinite alternate ease-in-out;
-            transform-origin: center top;
+            /* Animation zoom supprimée ici */
         }
 
         .intro-container {
@@ -56,6 +55,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 80px; /* Espace pour le bouton fixe */
         }
 
         h1 {
@@ -125,35 +125,40 @@
             min-width: 250px;
         }
 
-        /* --- BOUTON AGRANDI ET DESCENDU --- */
+        /* --- BOUTON LARGE ET FIXE EN BAS --- */
+        .btn-fixed-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 20px 40px 20px; /* Padding pour le confort du pouce */
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+        }
+
         .enter-btn {
-            display: inline-block;
+            display: block;
             text-decoration: none;
             color: #ffffff;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            margin-top: 60px; /* Descend le bouton */
-            padding: 20px 0; /* Plus haut */
-            width: 85%; /* Plus large sur mobile */
-            max-width: 320px;
+            width: 100%; /* Largeur maximale */
+            max-width: 400px;
+            padding: 20px 0;
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem; /* Texte plus grand */
+            font-size: 1rem;
             text-transform: uppercase;
             letter-spacing: 4px;
             font-weight: 600;
             border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 30px rgba(216, 45, 126, 0.4);
             cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
-        .enter-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(216, 45, 126, 0.6);
-        }
-
-        @keyframes zoomSlow {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+        .enter-btn:active {
+            transform: scale(0.97);
         }
 
         @keyframes fadeIn {
@@ -164,7 +169,7 @@
         @media (max-width: 480px) {
             h1 { font-size: 3.8rem; }
             .unit { width: 60px; height: 60px; }
-            .enter-btn { margin-top: 50px; padding: 22px 0; font-size: 0.9rem; }
+            .enter-btn { font-size: 0.9rem; padding: 18px 0; }
         }
     </style>
 </head>
@@ -184,7 +189,9 @@
     </div>
 
     <p class="date">14 JUIN 2026</p>
+</div>
 
+<div class="btn-fixed-container">
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
 
