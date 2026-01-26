@@ -55,7 +55,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            transform: translateY(20px);
+            /* On descend légèrement l'ensemble pour que le bouton soit plus bas */
+            transform: translateY(30px);
         }
 
         h1 {
@@ -109,21 +110,22 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             min-width: 230px;
-            margin-bottom: 10px; /* Espace avant le bouton */
+            margin-bottom: 50px; /* Plus d'espace entre la date et le bouton */
         }
 
-        /* BOUTON REMONTÉ SOUS LA DATE */
+        /* BOUTON LARGE ET POSITIONNÉ SOUS LA DATE */
         .enter-btn {
             display: block;
-            width: 70%;
-            max-width: 280px;
-            padding: 18px 0;
+            width: 90%; /* Bien plus large */
+            max-width: 400px; /* Limite sur tablette/desktop */
+            padding: 22px 0;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
             color: #fff;
             text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
+            font-size: 1rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
+            font-weight: 600;
             border-radius: 50px;
             box-shadow: 0 15px 35px rgba(216,45,126,0.5);
             position: relative;
@@ -132,7 +134,7 @@
         }
 
         .enter-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
 
         .enter-btn::after {
@@ -154,13 +156,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(30px); }
         }
 
         @media (max-width: 480px) {
-            .intro-container { transform: translateY(30px); }
             h1 { font-size: 3.8rem; }
+            .enter-btn { width: 95%; } /* Presque toute la largeur sur mobile */
         }
     </style>
 </head>
