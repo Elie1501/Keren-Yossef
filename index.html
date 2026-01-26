@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Karen & Yossef | L'Union</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --fuchsia: #D82D7E;
@@ -36,7 +34,6 @@
             position: relative;
         }
 
-        /* FOND — NE BOUGE PAS */
         .bg-image {
             position: absolute;
             top: 0;
@@ -48,7 +45,7 @@
             background: url('bisousfront.jpg') no-repeat center top / cover;
         }
 
-        /* CONTENU CENTRAL — DESCENDU */
+        /* CONTAINER CENTRAL UNIQUE */
         .intro-container {
             z-index: 1;
             opacity: 0;
@@ -58,8 +55,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 180px;
-            transform: translateY(40px); /* ⬇️ DESCENTE ICI */
+            transform: translateY(20px);
         }
 
         h1 {
@@ -113,24 +109,12 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             min-width: 230px;
+            margin-bottom: 10px; /* Espace avant le bouton */
         }
 
-        /* BOUTON — LÉGÈREMENT DESCENDU */
-        .btn-fixed-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 20px 180px;
-            display: flex;
-            justify-content: center;
-            z-index: 10;
-            pointer-events: none;
-            transform: translateY(20px); /* ⬇️ DESCENTE ICI */
-        }
-
+        /* BOUTON REMONTÉ SOUS LA DATE */
         .enter-btn {
-            pointer-events: auto;
+            display: block;
             width: 70%;
             max-width: 280px;
             padding: 18px 0;
@@ -144,6 +128,11 @@
             box-shadow: 0 15px 35px rgba(216,45,126,0.5);
             position: relative;
             overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .enter-btn:active {
+            transform: scale(0.95);
         }
 
         .enter-btn::after {
@@ -165,13 +154,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(60px); }
-            to { opacity: 1; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(20px); }
         }
 
         @media (max-width: 480px) {
-            .intro-container { transform: translateY(50px); }
-            .btn-fixed-container { transform: translateY(25px); }
+            .intro-container { transform: translateY(30px); }
+            h1 { font-size: 3.8rem; }
         }
     </style>
 </head>
@@ -191,9 +180,7 @@
     </div>
 
     <p class="date">14 JUIN 2026</p>
-</div>
 
-<div class="btn-fixed-container">
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
 
@@ -210,12 +197,12 @@
             const m = Math.floor((diff / (1000 * 60)) % 60);
             const s = Math.floor((diff / 1000) % 60);
 
-            days.innerText = d.toString().padStart(2, "0");
-            hours.innerText = h.toString().padStart(2, "0");
-            mins.innerText = m.toString().padStart(2, "0");
-            secs.innerText = s.toString().padStart(2, "0");
+            document.getElementById("days").innerText = d.toString().padStart(2, "0");
+            document.getElementById("hours").innerText = h.toString().padStart(2, "0");
+            document.getElementById("mins").innerText = m.toString().padStart(2, "0");
+            document.getElementById("secs").innerText = s.toString().padStart(2, "0");
         } else {
-            timer.innerHTML = "<h2 style='font-family:Great Vibes;color:white;'>C'est le grand jour ✨</h2>";
+            document.getElementById("timer").innerHTML = "<h2 style='font-family:Great Vibes;color:white;'>C'est le grand jour ✨</h2>";
         }
     }
 
