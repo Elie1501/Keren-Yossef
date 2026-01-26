@@ -54,7 +54,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 120px; /* Espace augmenté pour le bouton remonté */
+            margin-bottom: 140px; /* Plus d'espace pour le bouton remonté */
         }
 
         h1 {
@@ -124,21 +124,22 @@
             min-width: 250px;
         }
 
-        /* --- BOUTON LARGE ET FIXE (REMONTÉ) --- */
+        /* --- BOUTON FIXE ENCORE PLUS REMONTÉ --- */
         .btn-fixed-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            /* Padding augmenté en bas pour remonter le bouton */
-            padding: 20px 20px 80px 20px; 
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            padding: 20px 20px 120px 20px; /* Remonté significativement */
             z-index: 10;
             display: flex;
             justify-content: center;
+            pointer-events: none; /* Permet de cliquer à travers le container si besoin */
         }
 
         .enter-btn {
+            pointer-events: auto; /* Réactive le clic sur le bouton lui-même */
+            position: relative;
             display: block;
             text-decoration: none;
             color: #ffffff;
@@ -153,8 +154,27 @@
             font-weight: 600;
             border-radius: 50px;
             box-shadow: 0 10px 30px rgba(216, 45, 126, 0.5);
-            cursor: pointer;
+            overflow: hidden; /* Important pour l'effet de brillance */
             transition: transform 0.2s ease;
+        }
+
+        /* --- EFFET DE BRILLANCE --- */
+        .enter-btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -60%; }
+            20% { left: 120%; }
+            100% { left: 120%; }
         }
 
         .enter-btn:active {
@@ -169,8 +189,7 @@
         @media (max-width: 480px) {
             h1 { font-size: 3.8rem; }
             .unit { width: 60px; height: 60px; }
-            /* Ajustement pour les petits écrans mobiles */
-            .btn-fixed-container { padding-bottom: 70px; } 
+            .btn-fixed-container { padding-bottom: 100px; } /* Ajusté pour mobile */
         }
     </style>
 </head>
