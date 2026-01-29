@@ -45,24 +45,18 @@
             background: url('bisousfront.jpg') no-repeat center top / cover;
         }
 
-        /* CONTAINER GLOBAL */
+        /* CONTAINER CENTRAL UNIQUE */
         .intro-container {
             z-index: 1;
             opacity: 0;
             animation: fadeIn 2s ease-out forwards 0.5s;
             width: 100%;
-            height: 100%; /* Occupe tout l'écran pour le placement */
-            padding: 0 20px 40px 20px; /* Padding bas pour ne pas coller au bord */
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end; /* Pousse tout vers le bas */
-        }
-
-        /* BLOC TEXTE + TIMER (Baissé via une marge haute) */
-        .content-block {
-            margin-top: auto; /* Pousse ce bloc vers le bas */
-            margin-bottom: 50px; /* Espace fixe au-dessus du bouton */
+            /* On descend légèrement l'ensemble pour que le bouton soit plus bas */
+            transform: translateY(30px);
         }
 
         h1 {
@@ -116,13 +110,14 @@
             border-top: 1px solid rgba(255,255,255,0.1);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             min-width: 230px;
+            margin-bottom: 50px; /* Plus d'espace entre la date et le bouton */
         }
 
-        /* LE BOUTON — RESTE BIEN LARGE ET EN BAS */
+        /* BOUTON LARGE ET POSITIONNÉ SOUS LA DATE */
         .enter-btn {
             display: block;
-            width: 90%;
-            max-width: 400px;
+            width: 90%; /* Bien plus large */
+            max-width: 400px; /* Limite sur tablette/desktop */
             padding: 22px 0;
             background: linear-gradient(45deg, var(--fuchsia), var(--coral));
             color: #fff;
@@ -161,14 +156,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(30px); }
         }
 
         @media (max-width: 480px) {
             h1 { font-size: 3.8rem; }
-            .enter-btn { width: 95%; }
-            .content-block { margin-bottom: 40px; }
+            .enter-btn { width: 95%; } /* Presque toute la largeur sur mobile */
         }
     </style>
 </head>
@@ -178,18 +172,16 @@
 <div class="bg-image"></div>
 
 <div class="intro-container">
-    <div class="content-block">
-        <h1>Karen & Yossef</h1>
+    <h1>Karen & Yossef</h1>
 
-        <div class="countdown-container" id="timer">
-            <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
-            <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
-            <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
-            <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
-        </div>
-
-        <p class="date">14 JUIN 2026</p>
+    <div class="countdown-container" id="timer">
+        <div class="unit"><span class="num" id="days">00</span><span class="label">Jours</span></div>
+        <div class="unit"><span class="num" id="hours">00</span><span class="label">Heures</span></div>
+        <div class="unit"><span class="num" id="mins">00</span><span class="label">Min</span></div>
+        <div class="unit"><span class="num" id="secs">00</span><span class="label">Sec</span></div>
     </div>
+
+    <p class="date">14 JUIN 2026</p>
 
     <a href="invitation.html" class="enter-btn">Voir l'invitation</a>
 </div>
