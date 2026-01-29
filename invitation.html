@@ -49,7 +49,6 @@
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* --- BOUTON MUSIQUE --- */
         #musicToggle {
             position: fixed;
             bottom: 25px;
@@ -136,7 +135,6 @@
             margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
         }
 
-        /* --- FORMULAIRE --- */
         .rsvp-form { text-align: left; margin-top: 20px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
@@ -197,15 +195,28 @@
     <div class="image-section img-bague reveal"></div>
 
     <div class="wedding-card reveal">
-        <p class="card-type">Cérémonie Religieuse</p>
-        <h3 class="card-title cormorant">La Houppa</h3>
-        <div class="card-body">
-            <span class="cormorant" style="font-size: 2.2rem; color: var(--fuchsia); display: block;">Karen & Yossef</span>
-            <span class="highlight">Dimanche 14 Juin 2026</span>
-            Au <strong>CHÂTEAU DES HAUTS DE PROVINS</strong><br>
-            Début : <span style="color:var(--coral); font-weight:600;">16H30</span>
+        <img src="hebreu.png" alt="Bénédiction" style="width: 85%; max-width: 380px; margin: 0 auto 10px; display: block; filter: invert(33%) sepia(82%) saturate(2462%) hue-rotate(307deg) brightness(65%) contrast(92%);">
+
+        <p class="card-type" style="margin-bottom: 20px;">Cérémonie Religieuse</p>
+
+        <div style="margin: 25px 0;">
+            <p style="font-size: 1rem; color: var(--text-dark); line-height: 1.6; font-style: italic;">
+                Nous sommes heureux, avec l'aide de D-ieu,<br>de vous convier à notre Houppa.
+            </p>
         </div>
-        <a href="https://waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline">Y aller avec Waze</a>
+
+        <h3 class="card-title cormorant" style="margin-bottom: 15px;">La Houppa</h3>
+
+        <div class="card-body">
+            <span class="cormorant" style="font-size: 2.2rem; color: var(--fuchsia); display: block; margin-bottom: 10px;">Karen & Yossef</span>
+            <span class="highlight">Dimanche 14 Juin 2026</span>
+            <p style="margin-top: 10px;">
+                Au <strong>CHÂTEAU DES HAUTS DE PROVINS</strong><br>
+                Début : <span style="color:var(--coral); font-weight:600;">16H30</span>
+            </p>
+        </div>
+
+        <a href="https://waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline" style="margin-top: 25px;">Y aller avec Waze</a>
     </div>
 
     <div class="wedding-card reveal">
@@ -215,7 +226,7 @@
         <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
             <div class="form-group">
                 <label class="required">Nom & Prénom</label>
-                <input type="text" name="nom_complet">
+                <input type="text" name="nom_complet" required>
             </div>
 
             <hr>
@@ -276,62 +287,34 @@
 </footer>
 
 <script>
-    // --- GESTION DES SECTIONS DU FORMULAIRE ---
     function toggleMairie() {
         const val = document.getElementById('presence_mairie').value;
         const section = document.getElementById('section_mairie');
         section.style.display = (val === 'oui') ? 'block' : 'none';
-        const inputs = section.querySelectorAll('input');
-        inputs.forEach(i => i.required = (val === 'oui'));
     }
 
     function toggleHouppa() {
         const val = document.getElementById('presence_houppa').value;
         const section = document.getElementById('section_houppa');
         section.style.display = (val === 'oui') ? 'block' : 'none';
-        const inputs = section.querySelectorAll('input');
-        inputs.forEach(i => i.required = (val === 'oui'));
     }
 
-    // --- GESTION MUSIQUE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
     const icons = { play: "💖", pause: "🎶" };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        if (localStorage.getItem('weddingMusicPlaying') === 'true') {
-            const savedTime = localStorage.getItem('weddingMusicTime');
-            if (savedTime) audio.currentTime = parseFloat(savedTime);
-            audio.play().then(() => {
-                musicToggle.classList.add('playing');
-                musicToggle.innerText = icons.play;
-            }).catch(() => {
-                musicToggle.innerText = icons.pause;
-            });
-        } else {
-            musicToggle.innerText = icons.pause;
-        }
-    });
 
     musicToggle.addEventListener('click', () => {
         if (audio.paused) {
             audio.play();
             musicToggle.innerText = icons.play;
             musicToggle.classList.add('playing');
-            localStorage.setItem('weddingMusicPlaying', 'true');
         } else {
             audio.pause();
             musicToggle.innerText = icons.pause;
             musicToggle.classList.remove('playing');
-            localStorage.setItem('weddingMusicPlaying', 'false');
         }
     });
 
-    setInterval(() => {
-        if (!audio.paused) localStorage.setItem('weddingMusicTime', audio.currentTime);
-    }, 500);
-
-    // --- REVEAL ANIMATION ---
     function reveal() {
         var reveals = document.querySelectorAll(".reveal");
         for (var i = 0; i < reveals.length; i++) {
@@ -343,7 +326,6 @@
     window.addEventListener("scroll", reveal);
     reveal();
 
-    // --- PÉTALES ---
     function createPetal() {
         const petal = document.createElement('div');
         petal.classList.add('petal');
