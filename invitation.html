@@ -286,45 +286,35 @@
 </footer>
 
 <script>
-    function toggleMairie() {
-        const val = document.getElementById('presence_mairie').value;
-        document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
-    }
-
-    function toggleHouppa() {
-        const val = document.getElementById('presence_houppa').value;
-        document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
-    }
-
-    // --- LOGIQUE MUSIQUE OPTIMISÉE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
-    let hasPlayed = false;
 
-    function playMusic() {
-        if (!hasPlayed) {
+    // --- LOGIQUE DE LANCEMENT AUTOMATIQUE VIA INDEX ---
+    window.addEventListener('load', () => {
+        if (localStorage.getItem('playMusic') === 'true') {
             audio.play().then(() => {
-                hasPlayed = true;
                 musicToggle.innerText = "💖";
                 musicToggle.classList.add('playing');
-                // Nettoyage des écouteurs une fois lancé
-                window.removeEventListener('click', playMusic);
-                window.removeEventListener('touchstart', playMusic);
-                window.removeEventListener('scroll', playMusic);
-            }).catch(error => {
-                console.log("Lecture automatique bloquée, en attente d'interaction.");
+                // On nettoie pour que ça ne tourne pas en boucle si on recharge la page plus tard
+                localStorage.removeItem('playMusic');
+            }).catch(e => console.log("L'autoplay nécessite encore une interaction sur cette page."));
+        }
+    });
+
+    // --- RELANCE AU SCROLL (AU CAS OÙ LE NAVIGATEUR BLOQUE LE LOCALSTORAGE) ---
+    function playOnScroll() {
+        if (audio.paused) {
+            audio.play().then(() => {
+                musicToggle.innerText = "💖";
+                musicToggle.classList.add('playing');
+                window.removeEventListener('scroll', playOnScroll);
             });
         }
     }
+    window.addEventListener('scroll', playOnScroll, { once: true });
 
-    // Écouteurs pour forcer le lancement dès que l'invité touche à la page
-    window.addEventListener('click', playMusic);
-    window.addEventListener('touchstart', playMusic);
-    window.addEventListener('scroll', playMusic, { once: true });
-
-    // Bouton manuel
-    musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Évite de déclencher playMusic deux fois
+    // --- BOUTON MANUEL ---
+    musicToggle.addEventListener('click', () => {
         if (audio.paused) {
             audio.play();
             musicToggle.innerText = "💖";
@@ -336,7 +326,17 @@
         }
     });
 
-    // Animations et Pétales (inchangés)
+    // Fonctions toggle Mairie/Houppa (inchangées)
+    function toggleMairie() {
+        const val = document.getElementById('presence_mairie').value;
+        document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
+    }
+    function toggleHouppa() {
+        const val = document.getElementById('presence_houppa').value;
+        document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
+    }
+
+    // Animation au scroll et Pétales (inchangés)
     function reveal() {
         var reveals = document.querySelectorAll(".reveal");
         for (var i = 0; i < reveals.length; i++) {
@@ -352,12 +352,12 @@
         const petal = document.createElement('div');
         petal.classList.add('petal');
         const size = Math.random() * 15 + 10;
-        petal.style.width = `${size}px`;
-        petal.style.height = `${size * 1.2}px`;
-        petal.style.left = `${Math.random() * window.innerWidth}px`;
-        petal.style.top = `-20px`;
-        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`);
-        petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
+        petal.style.width = size + 'px';
+        petal.style.height = (size * 1.2) + 'px';
+        petal.style.left = Math.random() * window.innerWidth + 'px';
+        petal.style.top = '-20px';
+        petal.style.setProperty('--x-end', ((Math.random() - 0.5) * 300) + 'px');
+        petal.style.setProperty('--r-end', (Math.random() * 360) + 'deg');
         petal.style.animation = `fall ${Math.random() * 5 + 7}s linear forwards`;
         document.body.appendChild(petal);
         setTimeout(() => petal.remove(), 10000);
