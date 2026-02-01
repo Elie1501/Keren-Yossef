@@ -286,6 +286,7 @@
 </footer>
 
 <script>
+    // --- GESTION DES SECTIONS RSVP ---
     function toggleMairie() {
         const val = document.getElementById('presence_mairie').value;
         document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
@@ -296,39 +297,48 @@
         document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
     }
 
-    // --- LOGIQUE MUSIQUE OPTIMISÉE ---
+    // --- LOGIQUE MUSIQUE ULTRA-RÉACTIVE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
     let hasPlayed = false;
 
-    function playMusic() {
-        if (!hasPlayed) {
-            audio.play().then(() => {
-                hasPlayed = true;
-                musicToggle.innerText = "💖";
-                musicToggle.classList.add('playing');
-                // Nettoyage des écouteurs une fois lancé
-                window.removeEventListener('click', playMusic);
-                window.removeEventListener('touchstart', playMusic);
-                window.removeEventListener('scroll', playMusic);
-            }).catch(error => {
-                console.log("Lecture automatique bloquée, en attente d'interaction.");
-            });
-        }
+    function attemptPlay() {
+        if (hasPlayed) return;
+
+        audio.play().then(() => {
+            hasPlayed = true;
+            musicToggle.innerText = "💖";
+            musicToggle.classList.add('playing');
+            
+            // Une fois que ça joue, on retire les écouteurs globaux
+            cleanListeners();
+        }).catch(error => {
+            // Échec souvent dû aux restrictions navigateurs
+            console.log("En attente d'une interaction plus directe...");
+        });
     }
 
-    // Écouteurs pour forcer le lancement dès que l'invité touche à la page
-    window.addEventListener('click', playMusic);
-    window.addEventListener('touchstart', playMusic);
-    window.addEventListener('scroll', playMusic, { once: true });
+    function cleanListeners() {
+        ['click', 'touchstart', 'scroll', 'mousemove', 'keydown'].forEach(evt => {
+            window.removeEventListener(evt, attemptPlay);
+        });
+    }
 
-    // Bouton manuel
+    // On écoute absolument TOUT pour lancer la musique au plus vite
+    window.addEventListener('click', attemptPlay);
+    window.addEventListener('touchstart', attemptPlay);
+    window.addEventListener('scroll', attemptPlay);
+    window.addEventListener('mousemove', attemptPlay);
+    window.addEventListener('keydown', attemptPlay);
+
+    // Bouton manuel (Toggle)
     musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Évite de déclencher playMusic deux fois
+        e.stopPropagation(); 
         if (audio.paused) {
             audio.play();
             musicToggle.innerText = "💖";
             musicToggle.classList.add('playing');
+            hasPlayed = true;
         } else {
             audio.pause();
             musicToggle.innerText = "🎶";
@@ -336,14 +346,14 @@
         }
     });
 
-    // Animations et Pétales (inchangés)
+    // --- ANIMATIONS & PÉTALES ---
     function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        for (var i = 0; i < reveals.length; i++) {
-            var windowHeight = window.innerHeight;
-            var elementTop = reveals[i].getBoundingClientRect().top;
-            if (elementTop < windowHeight - 50) reveals[i].classList.add("active");
-        }
+        const reveals = document.querySelectorAll(".reveal");
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 50) el.classList.add("active");
+        });
     }
     window.addEventListener("scroll", reveal);
     reveal();
