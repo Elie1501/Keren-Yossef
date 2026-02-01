@@ -74,6 +74,8 @@
             color: white;
         }
 
+        @keyframes pulseMusic { 0% { transform: scale(1); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
         .container {
             max-width: 650px;
             margin: -30px auto 40px;
@@ -294,10 +296,35 @@
         document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
     }
 
-    // Musique
+    // --- LOGIQUE MUSIQUE OPTIMISÉE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
-    musicToggle.addEventListener('click', () => {
+    let hasPlayed = false;
+
+    function playMusic() {
+        if (!hasPlayed) {
+            audio.play().then(() => {
+                hasPlayed = true;
+                musicToggle.innerText = "💖";
+                musicToggle.classList.add('playing');
+                // Nettoyage des écouteurs une fois lancé
+                window.removeEventListener('click', playMusic);
+                window.removeEventListener('touchstart', playMusic);
+                window.removeEventListener('scroll', playMusic);
+            }).catch(error => {
+                console.log("Lecture automatique bloquée, en attente d'interaction.");
+            });
+        }
+    }
+
+    // Écouteurs pour forcer le lancement dès que l'invité touche à la page
+    window.addEventListener('click', playMusic);
+    window.addEventListener('touchstart', playMusic);
+    window.addEventListener('scroll', playMusic, { once: true });
+
+    // Bouton manuel
+    musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); // Évite de déclencher playMusic deux fois
         if (audio.paused) {
             audio.play();
             musicToggle.innerText = "💖";
@@ -309,7 +336,7 @@
         }
     });
 
-    // Animation au scroll
+    // Animations et Pétales (inchangés)
     function reveal() {
         var reveals = document.querySelectorAll(".reveal");
         for (var i = 0; i < reveals.length; i++) {
@@ -321,7 +348,6 @@
     window.addEventListener("scroll", reveal);
     reveal();
 
-    // Effet pétales
     function createPetal() {
         const petal = document.createElement('div');
         petal.classList.add('petal');
