@@ -285,173 +285,94 @@
     <p style="font-size: 0.65rem; color: #aaa;">K&Y - 2026</p>
 </footer>
 
-<style>
-    :root {
-        --fuchsia: #D82D7E;
-        --coral: #FF7F50;
-        --amber: #B8860B;
-        --soft-white: #FDFBF7;
-        --text-dark: #2c2c2c;
+<script>
+    // --- GESTION DES SECTIONS RSVP ---
+    function toggleMairie() {
+        const val = document.getElementById('presence_mairie').value;
+        document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    body {
-        background-color: var(--soft-white);
-        color: var(--text-dark);
-        font-family: 'Montserrat', sans-serif;
-        overflow-x: hidden;
-        background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
-        line-height: 1.5;
-        position: relative;
+    function toggleHouppa() {
+        const val = document.getElementById('presence_houppa').value;
+        document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
     }
 
-    .cormorant { font-family: 'Cormorant Garamond', serif; }
+    // --- LOGIQUE MUSIQUE ULTRA-RÉACTIVE ---
+    const audio = document.getElementById('weddingMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let hasPlayed = false;
 
-    header {
-        height: 55vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(to bottom, rgba(255,255,255,0.1), var(--soft-white)), url('maisonVueHauteur.JPG') no-repeat center center / cover;
-        text-align: center;
-        padding: 20px;
+    function attemptPlay() {
+        if (hasPlayed) return;
+
+        audio.play().then(() => {
+            hasPlayed = true;
+            musicToggle.innerText = "💖";
+            musicToggle.classList.add('playing');
+            
+            // Une fois que ça joue, on retire les écouteurs globaux
+            cleanListeners();
+        }).catch(error => {
+            // Échec souvent dû aux restrictions navigateurs
+            console.log("En attente d'une interaction plus directe...");
+        });
     }
 
-    .logo-main {
-        width: clamp(150px, 40vw, 220px);
-        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
-        margin-bottom: 15px;
-        opacity: 0.7;
-        animation: float 4s ease-in-out infinite;
+    function cleanListeners() {
+        ['click', 'touchstart', 'scroll', 'mousemove', 'keydown'].forEach(evt => {
+            window.removeEventListener(evt, attemptPlay);
+        });
     }
 
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    // On écoute absolument TOUT pour lancer la musique au plus vite
+    window.addEventListener('click', attemptPlay);
+    window.addEventListener('touchstart', attemptPlay);
+    window.addEventListener('scroll', attemptPlay);
+    window.addEventListener('mousemove', attemptPlay);
+    window.addEventListener('keydown', attemptPlay);
 
-    /* BOUTON MUSIQUE AVEC BATTEMENT STABILISÉ */
-    #musicToggle {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        z-index: 1000;
-        width: 55px;
-        height: 55px;
-        background: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        box-shadow: 0 8px 25px rgba(216, 45, 126, 0.2);
-        transition: all 0.4s ease;
-        /* On s'assure que l'origine de l'animation est le centre du bouton */
-        transform-origin: center;
+    // Bouton manuel (Toggle)
+    musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        if (audio.paused) {
+            audio.play();
+            musicToggle.innerText = "💖";
+            musicToggle.classList.add('playing');
+            hasPlayed = true;
+        } else {
+            audio.pause();
+            musicToggle.innerText = "🎶";
+            musicToggle.classList.remove('playing');
+        }
+    });
+
+    // --- ANIMATIONS & PÉTALES ---
+    function reveal() {
+        const reveals = document.querySelectorAll(".reveal");
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 50) el.classList.add("active");
+        });
     }
+    window.addEventListener("scroll", reveal);
+    reveal();
 
-    #musicToggle.playing {
-        animation: pulseMusic 2s infinite;
-        background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-        color: white;
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.classList.add('petal');
+        const size = Math.random() * 15 + 10;
+        petal.style.width = `${size}px`;
+        petal.style.height = `${size * 1.2}px`;
+        petal.style.left = `${Math.random() * window.innerWidth}px`;
+        petal.style.top = `-20px`;
+        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`);
+        petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
+        petal.style.animation = `fall ${Math.random() * 5 + 7}s linear forwards`;
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 10000);
     }
-
-    /* Animation de battement sans décalage de position */
-    @keyframes pulseMusic { 
-        0% { transform: scale(1); } 
-        50% { transform: scale(1.15); } 
-        100% { transform: scale(1); } 
-    }
-
-    .container {
-        max-width: 650px;
-        margin: -30px auto 40px;
-        padding: 0 15px;
-        position: relative;
-        z-index: 10;
-    }
-
-    .wedding-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 25px 20px;
-        margin-bottom: 25px;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        text-align: center;
-        position: relative;
-        backdrop-filter: blur(5px);
-    }
-
-    .wedding-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 4px;
-        background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
-    }
-
-    .image-section {
-        width: 100%;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        overflow: hidden;
-        margin: 25px 0;
-    }
-
-    .img-bague { height: 450px; background: url('verres.jpg') no-repeat center center / cover; }
-    .img-maison { height: 250px; background: url('maison.JPG') no-repeat center center / cover; }
-
-    .card-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; color: var(--fuchsia); margin-bottom: 10px; font-weight: 600; }
-    .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
-    .highlight { color: var(--fuchsia); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
-
-    .btn-action {
-        display: inline-flex; justify-content: center; width: 100%;
-        padding: 14px; background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-        color: white; text-decoration: none; border-radius: 50px;
-        font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-        border: none; cursor: pointer; margin-top: 15px;
-    }
-
-    .btn-outline {
-        background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
-        margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
-    }
-
-    .rsvp-form { text-align: left; margin-top: 20px; }
-    .form-group { margin-bottom: 20px; }
-    label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
-    .required::after { content: " *"; color: var(--fuchsia); }
-
-    input[type="text"], input[type="number"], select, textarea {
-        width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px;
-        font-family: inherit; font-size: 0.95rem; background: white;
-    }
-
-    .people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-
-    hr { border: 0; border-top: 1px solid #eee; margin: 25px 0; }
-    footer { text-align: center; padding: 40px 20px; background: white; }
-
-    .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-
-    .petal {
-        position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
-        border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 9999;
-    }
-
-    @keyframes fall {
-        0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.8; }
-        100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
-    }
-
-    @media (max-width: 480px) { 
-        .img-bague { height: 350px; } 
-        #musicToggle { bottom: 20px; right: 20px; } /* Ajustement léger pour mobile */
-    }
-</style>
+    setInterval(createPetal, 450);
+</script>
 </body>
 </html>
