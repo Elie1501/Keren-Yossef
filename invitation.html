@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Invitation | Karen & Yossef</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -23,10 +23,38 @@
             overflow-x: hidden;
             background-image: radial-gradient(circle at center, #ffffff 0%, #F2EEE5 100%);
             line-height: 1.5;
-            position: relative;
         }
 
         .cormorant { font-family: 'Cormorant Garamond', serif; }
+
+        /* BOUTON MUSIQUE - FIXATION GARANTIE */
+        #musicToggle {
+            position: fixed;
+            bottom: calc(25px + env(safe-area-inset-bottom)); /* Gère les encoches iPhone */
+            right: 25px;
+            z-index: 99999; /* Priorité absolue */
+            width: 55px;
+            height: 55px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(216, 45, 126, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            touch-action: manipulation;
+        }
+
+        #musicToggle.playing {
+            animation: pulseMusic 2s infinite;
+            background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            color: white;
+        }
+
+        @keyframes pulseMusic { 0% { transform: scale(1); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         header {
             height: 55vh;
@@ -48,33 +76,6 @@
         }
 
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        #musicToggle {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 1000;
-            width: 55px;
-            height: 55px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 8px 25px rgba(216, 45, 126, 0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #musicToggle.playing {
-            animation: pulseMusic 2s infinite;
-            background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            color: white;
-        }
-
-        @keyframes pulseMusic { 0% { transform: scale(1); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
         .container {
             max-width: 650px;
@@ -151,7 +152,7 @@
 
         .petal {
             position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
-            border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 9999;
+            border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 5000;
         }
 
         @keyframes fall {
@@ -174,7 +175,6 @@
 </header>
 
 <div class="container">
-
     <div class="wedding-card reveal">
         <p class="card-type">Union Civile</p>
         <h3 class="card-title cormorant">La Mairie</h3>
@@ -217,9 +217,7 @@
                 <label class="required">Nom & Prénom</label>
                 <input type="text" name="nom_complet" required placeholder="Ex: Famille Levy">
             </div>
-
             <hr>
-
             <div class="form-group">
                 <label class="required">Serez-vous présent à la Mairie ?</label>
                 <select name="presence_mairie" id="presence_mairie" onchange="toggleMairie()" required>
@@ -228,7 +226,6 @@
                     <option value="non">NON, avec regret</option>
                 </select>
             </div>
-
             <div id="section_mairie" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
                     <div class="form-group">
@@ -241,9 +238,7 @@
                     </div>
                 </div>
             </div>
-
             <hr>
-
             <div class="form-group">
                 <label class="required">Serez-vous présent à la Houppa ?</label>
                 <select name="presence_houppa" id="presence_houppa" onchange="toggleHouppa()" required>
@@ -252,7 +247,6 @@
                     <option value="non">NON, avec regret</option>
                 </select>
             </div>
-
             <div id="section_houppa" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
                     <div class="form-group">
@@ -265,14 +259,11 @@
                     </div>
                 </div>
             </div>
-
             <hr>
-
             <div class="form-group">
                 <label>Un message pour les mariés ?</label>
                 <textarea name="message" rows="3" placeholder="Votre petit mot doux..."></textarea>
             </div>
-
             <button type="submit" class="btn-action">Envoyer ma réponse</button>
         </form>
     </div>
@@ -286,7 +277,6 @@
 </footer>
 
 <script>
-    // --- GESTION DES SECTIONS RSVP ---
     function toggleMairie() {
         const val = document.getElementById('presence_mairie').value;
         document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
@@ -297,41 +287,28 @@
         document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
     }
 
-    // --- LOGIQUE MUSIQUE ULTRA-RÉACTIVE ---
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
     let hasPlayed = false;
 
     function attemptPlay() {
         if (hasPlayed) return;
-
         audio.play().then(() => {
             hasPlayed = true;
             musicToggle.innerText = "💖";
             musicToggle.classList.add('playing');
-            
-            // Une fois que ça joue, on retire les écouteurs globaux
             cleanListeners();
-        }).catch(error => {
-            // Échec souvent dû aux restrictions navigateurs
-            console.log("En attente d'une interaction plus directe...");
-        });
+        }).catch(() => {});
     }
 
     function cleanListeners() {
-        ['click', 'touchstart', 'scroll', 'mousemove', 'keydown'].forEach(evt => {
-            window.removeEventListener(evt, attemptPlay);
-        });
+        ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, attemptPlay));
     }
 
-    // On écoute absolument TOUT pour lancer la musique au plus vite
     window.addEventListener('click', attemptPlay);
     window.addEventListener('touchstart', attemptPlay);
     window.addEventListener('scroll', attemptPlay);
-    window.addEventListener('mousemove', attemptPlay);
-    window.addEventListener('keydown', attemptPlay);
 
-    // Bouton manuel (Toggle)
     musicToggle.addEventListener('click', (e) => {
         e.stopPropagation(); 
         if (audio.paused) {
@@ -346,7 +323,6 @@
         }
     });
 
-    // --- ANIMATIONS & PÉTALES ---
     function reveal() {
         const reveals = document.querySelectorAll(".reveal");
         reveals.forEach(el => {
