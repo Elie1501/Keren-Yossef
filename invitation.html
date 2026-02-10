@@ -27,12 +27,12 @@
 
         .cormorant { font-family: 'Cormorant Garamond', serif; }
 
-        /* BOUTON MUSIQUE - FIXATION GARANTIE */
+        /* BOUTON MUSIQUE */
         #musicToggle {
             position: fixed;
-            bottom: calc(25px + env(safe-area-inset-bottom)); /* Gère les encoches iPhone */
+            bottom: calc(25px + env(safe-area-inset-bottom));
             right: 25px;
-            z-index: 99999; /* Priorité absolue */
+            z-index: 99999;
             width: 55px;
             height: 55px;
             background: white;
@@ -45,7 +45,6 @@
             font-size: 24px;
             box-shadow: 0 8px 25px rgba(216, 45, 126, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            touch-action: manipulation;
         }
 
         #musicToggle.playing {
@@ -54,7 +53,7 @@
             color: white;
         }
 
-        @keyframes pulseMusic { 0% { transform: scale(1); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes pulseMusic { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
         header {
             height: 55vh;
@@ -67,23 +66,10 @@
             padding: 20px;
         }
 
-        .logo-main {
-            width: clamp(150px, 40vw, 220px);
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
-            margin-bottom: 15px;
-            opacity: 0.7;
-            animation: float 4s ease-in-out infinite;
-        }
-
+        .logo-main { width: clamp(150px, 40vw, 220px); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1)); margin-bottom: 15px; opacity: 0.7; animation: float 4s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        .container {
-            max-width: 650px;
-            margin: -30px auto 40px;
-            padding: 0 15px;
-            position: relative;
-            z-index: 10;
-        }
+        .container { max-width: 650px; margin: -30px auto 40px; padding: 0 15px; position: relative; z-index: 10; }
 
         .wedding-card {
             background: rgba(255, 255, 255, 0.95);
@@ -104,14 +90,28 @@
             background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
         }
 
-        .image-section {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin: 25px 0;
+        /* NOUVEAU: Groupe de boutons côte à côte */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
         }
 
+        .btn-action {
+            display: inline-flex; justify-content: center; align-items: center; width: 100%;
+            padding: 14px; background: linear-gradient(45deg, var(--fuchsia), var(--coral));
+            color: white; text-decoration: none; border-radius: 50px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            border: none; cursor: pointer; transition: 0.3s;
+        }
+
+        .btn-outline {
+            background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
+            margin-top: 0; width: auto; padding: 10px 15px; font-size: 0.75rem; flex: 1;
+        }
+
+        .image-section { width: 100%; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); overflow: hidden; margin: 25px 0; }
         .img-bague { height: 450px; background: url('verres.jpg') no-repeat center center / cover; }
         .img-maison { height: 250px; background: url('maison.JPG') no-repeat center center / cover; }
 
@@ -119,28 +119,12 @@
         .card-title { font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--amber); margin-bottom: 10px; }
         .highlight { color: var(--fuchsia); font-weight: 600; display: block; margin: 5px 0; font-size: 1.1rem; }
 
-        .btn-action {
-            display: inline-flex; justify-content: center; width: 100%;
-            padding: 14px; background: linear-gradient(45deg, var(--fuchsia), var(--coral));
-            color: white; text-decoration: none; border-radius: 50px;
-            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            border: none; cursor: pointer; margin-top: 15px;
-        }
-
-        .btn-outline {
-            background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
-            margin-top: 10px; width: auto; padding: 8px 20px; font-size: 0.8rem;
-        }
-
         .rsvp-form { text-align: left; margin-top: 20px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-size: 0.75rem; font-weight: 600; margin-bottom: 8px; color: #555; text-transform: uppercase; }
         .required::after { content: " *"; color: var(--fuchsia); }
 
-        input[type="text"], input[type="number"], select, textarea {
-            width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px;
-            font-family: inherit; font-size: 0.95rem; background: white;
-        }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: white; }
 
         .people-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
 
@@ -150,16 +134,8 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .petal {
-            position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%);
-            border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 5000;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; }
-        }
+        .petal { position: fixed; background: linear-gradient(135deg, #fff5f7 0%, #ffc0cb 100%); border-radius: 150% 0 150% 0; opacity: 0; pointer-events: none; z-index: 5000; }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(105vh) translateX(var(--x-end)) rotate(var(--r-end)); opacity: 0; } }
 
         @media (max-width: 480px) { .img-bague { height: 350px; } }
     </style>
@@ -183,7 +159,10 @@
             À la Mairie de <strong>CHARENTON-LE-PONT</strong><br>
             Cérémonie à : <span style="color:var(--coral); font-weight:600;">13H30</span>
         </div>
-        <a href="https://www.waze.com/ul?q=Mairie%20de%20Charenton-le-Pont%2048%20rue%20de%20Paris" target="_blank" class="btn-action btn-outline">Itinéraire Waze Mairie</a>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Mairie%20de%20Charenton-le-Pont%2048%20rue%20de%20Paris" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('mairie')" class="btn-action btn-outline">📅 Bloquer Date</button>
+        </div>
     </div>
 
     <div class="image-section img-bague reveal"></div>
@@ -205,13 +184,15 @@
                 Début : <span style="color:var(--coral); font-weight:600;">16H30</span>
             </p>
         </div>
-        <a href="https://www.waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline" style="margin-top: 25px;">Y aller avec Waze</a>
+        <div class="btn-group">
+            <a href="https://www.waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline">Waze</a>
+            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">📅 Bloquer Date</button>
+        </div>
     </div>
 
     <div class="wedding-card reveal">
         <p class="card-type">Réponse souhaitée</p>
         <h3 class="card-title cormorant">Confirmation</h3>
-
         <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
             <div class="form-group">
                 <label class="required">Nom & Prénom</label>
@@ -228,14 +209,8 @@
             </div>
             <div id="section_mairie" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group">
-                        <label>Nombre d'adultes</label>
-                        <input type="number" name="adultes_mairie" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre d'enfants</label>
-                        <input type="number" name="enfants_mairie" min="0" value="0">
-                    </div>
+                    <div class="form-group"><label>Nombre d'adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Nombre d'enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -249,14 +224,8 @@
             </div>
             <div id="section_houppa" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group">
-                        <label>Nombre d'adultes</label>
-                        <input type="number" name="adultes_houppa" min="0" value="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Nombre d'enfants</label>
-                        <input type="number" name="enfants_houppa" min="0" value="0">
-                    </div>
+                    <div class="form-group"><label>Nombre d'adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Nombre d'enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -277,15 +246,63 @@
 </footer>
 
 <script>
-    function toggleMairie() {
-        const val = document.getElementById('presence_mairie').value;
-        document.getElementById('section_mairie').style.display = (val === 'oui') ? 'block' : 'none';
+    // --- FONCTION CALENDRIER (Style Noémie-Nathan) ---
+    function addToCalendar(type) {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        const events = {
+            mairie: {
+                title: "Mariage Karen & Yossef - Mairie",
+                start: "20260609T133000",
+                end: "20260609T150000",
+                location: "Mairie de Charenton-le-Pont, 48 rue de Paris",
+                description: "Cérémonie civile de Karen et Yossef.",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Karen+%26+Yossef+-+Mairie&dates=20260609T113000Z/20260609T133000Z&details=Cérémonie+civile.&location=Mairie+de+Charenton-le-Pont"
+            },
+            houppa: {
+                title: "Mariage Karen & Yossef - Houppa",
+                start: "20260614T163000",
+                end: "20260614T233000",
+                location: "Château des Hauts de Provins",
+                description: "Cérémonie religieuse et soirée.",
+                gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Karen+%26+Yossef+-+Houppa&dates=20260614T143000Z/20260614T220000Z&details=Cérémonie+religieuse+et+soirée.&location=Château+des+Hauts+de+Provins"
+            }
+        };
+
+        const ev = events[type];
+
+        if (isIOS) {
+            // Création d'un fichier .ics dynamique pour l'application Calendrier native iOS
+            const icsContent = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "BEGIN:VEVENT",
+                `DTSTART:${ev.start}`,
+                `DTEND:${ev.end}`,
+                `SUMMARY:${ev.title}`,
+                `DESCRIPTION:${ev.description}`,
+                `LOCATION:${ev.location}`,
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\n");
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'evenement.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            // Lien direct Google Calendar pour les autres
+            window.open(ev.gUrl, '_blank');
+        }
     }
 
-    function toggleHouppa() {
-        const val = document.getElementById('presence_houppa').value;
-        document.getElementById('section_houppa').style.display = (val === 'oui') ? 'block' : 'none';
-    }
+    // --- FORMULAIRE ET UI ---
+    function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
+    function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
@@ -294,41 +311,21 @@
     function attemptPlay() {
         if (hasPlayed) return;
         audio.play().then(() => {
-            hasPlayed = true;
-            musicToggle.innerText = "💖";
-            musicToggle.classList.add('playing');
-            cleanListeners();
+            hasPlayed = true; musicToggle.innerText = "💖"; musicToggle.classList.add('playing');
         }).catch(() => {});
     }
 
-    function cleanListeners() {
-        ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, attemptPlay));
-    }
-
-    window.addEventListener('click', attemptPlay);
-    window.addEventListener('touchstart', attemptPlay);
-    window.addEventListener('scroll', attemptPlay);
+    ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, attemptPlay, {once: true}));
 
     musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        if (audio.paused) {
-            audio.play();
-            musicToggle.innerText = "💖";
-            musicToggle.classList.add('playing');
-            hasPlayed = true;
-        } else {
-            audio.pause();
-            musicToggle.innerText = "🎶";
-            musicToggle.classList.remove('playing');
-        }
+        e.stopPropagation();
+        if (audio.paused) { audio.play(); musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); }
+        else { audio.pause(); musicToggle.innerText = "🎶"; musicToggle.classList.remove('playing'); }
     });
 
     function reveal() {
-        const reveals = document.querySelectorAll(".reveal");
-        reveals.forEach(el => {
-            const windowHeight = window.innerHeight;
-            const elementTop = el.getBoundingClientRect().top;
-            if (elementTop < windowHeight - 50) el.classList.add("active");
+        document.querySelectorAll(".reveal").forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
         });
     }
     window.addEventListener("scroll", reveal);
