@@ -89,12 +89,7 @@
             background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
         }
 
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
 
         .btn-action {
             display: inline-flex; justify-content: center; align-items: center; width: 100%;
@@ -246,7 +241,6 @@
 </footer>
 
 <script>
-    // --- CONFIGURATION GOOGLE SHEETS ---
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxB-LVcrop3r2_wlSZU751-yFVYogKH2IZ-mDdvGioFmin-kDBk1KHTvqMtQM69uJi3gw/exec';
     const form = document.getElementById('rsvpForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -266,17 +260,14 @@
                 toggleHouppa();
             })
             .catch(error => {
-                console.error('Erreur!', error.message);
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Réessayer l'envoi";
-                alert("Oups, une erreur est survenue lors de l'envoi.");
+                alert("Erreur lors de l'envoi. Vérifiez votre connexion.");
             });
     });
 
-    // --- FONCTION CALENDRIER ---
     function addToCalendar(type) {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
         const events = {
             mairie: {
                 title: "Mariage Karen & Yossef - Mairie",
@@ -295,80 +286,37 @@
                 gUrl: "https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+Karen+%26+Yossef+-+Houppa&dates=20260614T143000Z/20260614T220000Z&details=Cérémonie+religieuse+et+soirée.&location=Château+des+Hauts+de+Provins"
             }
         };
-
         const ev = events[type];
-
         if (isIOS) {
-            const icsContent = [
-                "BEGIN:VCALENDAR",
-                "VERSION:2.0",
-                "BEGIN:VEVENT",
-                `DTSTART:${ev.start}`,
-                `DTEND:${ev.end}`,
-                `SUMMARY:${ev.title}`,
-                `DESCRIPTION:${ev.description}`,
-                `LOCATION:${ev.location}`,
-                "END:VEVENT",
-                "END:VCALENDAR"
-            ].join("\n");
-
+            const icsContent = ["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT",`DTSTART:${ev.start}`,`DTEND:${ev.end}`,`SUMMARY:${ev.title}`,`DESCRIPTION:${ev.description}`,`LOCATION:${ev.location}`,"END:VEVENT","END:VCALENDAR"].join("\n");
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'evenement.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        } else {
-            window.open(ev.gUrl, '_blank');
-        }
+            link.href = url; link.setAttribute('download', 'mariage.ics'); document.body.appendChild(link);
+            link.click(); document.body.removeChild(link);
+        } else { window.open(ev.gUrl, '_blank'); }
     }
 
-    // --- INTERFACE ---
     function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
     function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
     const audio = document.getElementById('weddingMusic');
     const musicToggle = document.getElementById('musicToggle');
     let hasPlayed = false;
-
-    function attemptPlay() {
-        if (hasPlayed) return;
-        audio.play().then(() => {
-            hasPlayed = true; musicToggle.innerText = "💖"; musicToggle.classList.add('playing');
-        }).catch(() => {});
-    }
-
+    function attemptPlay() { if (!hasPlayed) audio.play().then(() => { hasPlayed = true; musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); }).catch(() => {}); }
     ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, attemptPlay, {once: true}));
-
-    musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (audio.paused) { audio.play(); musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); }
-        else { audio.pause(); musicToggle.innerText = "🎶"; musicToggle.classList.remove('playing'); }
-    });
-
-    function reveal() {
-        document.querySelectorAll(".reveal").forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
-        });
-    }
-    window.addEventListener("scroll", reveal);
-    reveal();
+    musicToggle.onclick = (e) => { e.stopPropagation(); if (audio.paused) { audio.play(); musicToggle.innerText = "💖"; musicToggle.classList.add('playing'); } else { audio.pause(); musicToggle.innerText = "🎶"; musicToggle.classList.remove('playing'); }};
+    function reveal() { document.querySelectorAll(".reveal").forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active"); }); }
+    window.addEventListener("scroll", reveal); reveal();
 
     function createPetal() {
-        const petal = document.createElement('div');
-        petal.classList.add('petal');
+        const petal = document.createElement('div'); petal.classList.add('petal');
         const size = Math.random() * 15 + 10;
-        petal.style.width = `${size}px`;
-        petal.style.height = `${size * 1.2}px`;
-        petal.style.left = `${Math.random() * window.innerWidth}px`;
-        petal.style.top = `-20px`;
-        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`);
-        petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
+        petal.style.width = `${size}px`; petal.style.height = `${size * 1.2}px`;
+        petal.style.left = `${Math.random() * window.innerWidth}px`; petal.style.top = `-20px`;
+        petal.style.setProperty('--x-end', `${(Math.random() - 0.5) * 300}px`); petal.style.setProperty('--r-end', `${Math.random() * 360}deg`);
         petal.style.animation = `fall ${Math.random() * 5 + 7}s linear forwards`;
-        document.body.appendChild(petal);
-        setTimeout(() => petal.remove(), 10000);
+        document.body.appendChild(petal); setTimeout(() => petal.remove(), 10000);
     }
     setInterval(createPetal, 450);
 </script>
