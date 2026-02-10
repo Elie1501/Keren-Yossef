@@ -27,7 +27,6 @@
 
         .cormorant { font-family: 'Cormorant Garamond', serif; }
 
-        /* BOUTON MUSIQUE */
         #musicToggle {
             position: fixed;
             bottom: calc(25px + env(safe-area-inset-bottom));
@@ -90,7 +89,6 @@
             background: linear-gradient(90deg, var(--fuchsia), var(--coral), var(--amber));
         }
 
-        /* NOUVEAU: Groupe de boutons côte à côte */
         .btn-group {
             display: flex;
             gap: 10px;
@@ -105,6 +103,8 @@
             font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
             border: none; cursor: pointer; transition: 0.3s;
         }
+
+        .btn-action:disabled { opacity: 0.7; cursor: not-allowed; }
 
         .btn-outline {
             background: transparent; border: 1.5px solid var(--amber); color: var(--amber);
@@ -161,7 +161,7 @@
         </div>
         <div class="btn-group">
             <a href="https://www.waze.com/ul?q=Mairie%20de%20Charenton-le-Pont%2048%20rue%20de%20Paris" target="_blank" class="btn-action btn-outline">Waze</a>
-            <button onclick="addToCalendar('mairie')" class="btn-action btn-outline">📅 Bloquer Date</button>
+            <button onclick="addToCalendar('mairie')" class="btn-action btn-outline">Bloquer la Date</button>
         </div>
     </div>
 
@@ -186,14 +186,14 @@
         </div>
         <div class="btn-group">
             <a href="https://www.waze.com/ul?q=Chateau+des+Hauts+de+Provins" target="_blank" class="btn-action btn-outline">Waze</a>
-            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">📅 Bloquer Date</button>
+            <button onclick="addToCalendar('houppa')" class="btn-action btn-outline">Bloquer la Date</button>
         </div>
     </div>
 
     <div class="wedding-card reveal">
         <p class="card-type">Réponse souhaitée</p>
         <h3 class="card-title cormorant">Confirmation</h3>
-        <form id="rsvpForm" class="rsvp-form" action="https://formspree.io/f/VOTRE_ID" method="POST">
+        <form id="rsvpForm" class="rsvp-form">
             <div class="form-group">
                 <label class="required">Nom & Prénom</label>
                 <input type="text" name="nom_complet" required placeholder="Ex: Famille Levy">
@@ -209,8 +209,8 @@
             </div>
             <div id="section_mairie" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group"><label>Nombre d'adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
-                    <div class="form-group"><label>Nombre d'enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_mairie" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_mairie" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -224,8 +224,8 @@
             </div>
             <div id="section_houppa" style="display:none; margin-bottom: 20px;">
                 <div class="people-grid">
-                    <div class="form-group"><label>Nombre d'adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
-                    <div class="form-group"><label>Nombre d'enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Adultes</label><input type="number" name="adultes_houppa" min="0" value="0"></div>
+                    <div class="form-group"><label>Enfants</label><input type="number" name="enfants_houppa" min="0" value="0"></div>
                 </div>
             </div>
             <hr>
@@ -233,7 +233,7 @@
                 <label>Un message pour les mariés ?</label>
                 <textarea name="message" rows="3" placeholder="Votre petit mot doux..."></textarea>
             </div>
-            <button type="submit" class="btn-action">Envoyer ma réponse</button>
+            <button type="submit" id="submitBtn" class="btn-action">Envoyer ma réponse</button>
         </form>
     </div>
 
@@ -246,7 +246,34 @@
 </footer>
 
 <script>
-    // --- FONCTION CALENDRIER (Style Noémie-Nathan) ---
+    // --- CONFIGURATION GOOGLE SHEETS ---
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxB-LVcrop3r2_wlSZU751-yFVYogKH2IZ-mDdvGioFmin-kDBk1KHTvqMtQM69uJi3gw/exec';
+    const form = document.getElementById('rsvpForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Envoi en cours...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                submitBtn.innerText = "C'est envoyé ! ✨";
+                submitBtn.style.background = "#4CAF50";
+                alert("Merci ! Votre réponse a bien été enregistrée.");
+                form.reset();
+                toggleMairie();
+                toggleHouppa();
+            })
+            .catch(error => {
+                console.error('Erreur!', error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Réessayer l'envoi";
+                alert("Oups, une erreur est survenue lors de l'envoi.");
+            });
+    });
+
+    // --- FONCTION CALENDRIER ---
     function addToCalendar(type) {
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
@@ -272,7 +299,6 @@
         const ev = events[type];
 
         if (isIOS) {
-            // Création d'un fichier .ics dynamique pour l'application Calendrier native iOS
             const icsContent = [
                 "BEGIN:VCALENDAR",
                 "VERSION:2.0",
@@ -295,12 +321,11 @@
             link.click();
             document.body.removeChild(link);
         } else {
-            // Lien direct Google Calendar pour les autres
             window.open(ev.gUrl, '_blank');
         }
     }
 
-    // --- FORMULAIRE ET UI ---
+    // --- INTERFACE ---
     function toggleMairie() { document.getElementById('section_mairie').style.display = (document.getElementById('presence_mairie').value === 'oui') ? 'block' : 'none'; }
     function toggleHouppa() { document.getElementById('section_houppa').style.display = (document.getElementById('presence_houppa').value === 'oui') ? 'block' : 'none'; }
 
